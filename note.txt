@@ -1,0 +1,5 @@
+npm i bcrypt cloudinary cors dotenv express express-fileupload googleapis jsonwebtoken mongodb mongoose nodemailer nodemon
+
+npm i yup redux-devtools-extension redux react-spinners react-router-dom react-redux react-moment react-loading-skeleton react-easy-crop js-cookie formik file-saver emoji-picker-react axios 
+
+
