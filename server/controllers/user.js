@@ -2,6 +2,12 @@ const {   validateEmail,validateLength,validateUsername,} = require("../helpers/
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { generateToken } = require("../helpers/token");
+const { sendVerificationEmail } = require("../helpers/mailer");
+const dotenv = require("dotenv");
+dotenv.config();
+const BASE_URL="http:://localhost:5137"
+
 exports.register=async(req,res)=>{
    try {
     const {
@@ -37,9 +43,22 @@ exports.register=async(req,res)=>{
         gender,
       }).save();
 
-
-
-      res.json(user)
+      const emailVerificationToken=generateToken({id:user._id.toString()},"30m")
+    //   console.log(emailVerificationToken);
+      const url = `${BASE_URL}/activate/${emailVerificationToken}`;
+      sendVerificationEmail(user.email, user.first_name, url);
+    const token = generateToken({ id: user._id.toString() }, "7d");
+    res.send({
+      id: user._id,
+      username: user.username,
+      picture: user.picture,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      token: token,
+      verified: user.verified,
+      url,
+      message: "Register Success ! please activate your email to start",
+    });
 
    } catch (error) {
     res.status(500).json({message:error.message})
