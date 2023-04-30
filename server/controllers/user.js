@@ -65,3 +65,11 @@ exports.register=async(req,res)=>{
     console.log(`register:${error} `);
    }
 }
+
+exports.activateAccount=async (req,res)=>{
+const validUser = req.user.id;
+const {token}=req.body
+console.log(token);
+console.log(req.body);
+
+}
