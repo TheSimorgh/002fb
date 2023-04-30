@@ -5,7 +5,7 @@ const fileUpload = require("express-fileupload");
 const { readdirSync } = require("fs");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user");
-const { default: dbConnect } = require("./config/dbConfig");
+const dbConnect = require("./config/dbConfig");
 dotenv.config();
 mongoose.set("strictQuery", true);
 const app = express();
@@ -59,7 +59,7 @@ readdirSync("./routes").map((r)=>app.use("/",require("./routes/"+r)))
 
 ;(async function server() {
   try {
-    dbConnect();
+    dbConnect()
     app.listen(process.env.PORT,()=>{ console.log(`Server is Running ${process.env.PORT}`);})
 
   } catch (error) {
