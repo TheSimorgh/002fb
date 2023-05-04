@@ -1,16 +1,20 @@
 /* eslint-disable no-unused-vars */
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import * as Yup from "yup";
 import DateOfBirthSelect from "./DateOfBirthSelect";
 import GenderSelect from "./GenderSelect";
 import DotLoader from "react-spinners/DotLoader";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import {RegisterInput} from "../../components";
 import "../../pages/login/style.css"
+import http from "../../axios/CustomAxios";
+import {   register, setUser2, truly } from "../../reducer/features/userSlice";
+import { login_visible_false,login_visible_true } from "../../reducer/features/togglesSlice";
+// eslint-disable-next-line react/prop-types
 
 
 // eslint-disable-next-line react/prop-types
@@ -27,22 +31,46 @@ const RegisterForm = ({toggleVisible}) => {
     bDay: new Date().getDate(),
     gender: "",
   };
-  const [user, setUser] = useState(userInfos);
+
+  const [userInfo, setUserInfo] = useState(userInfos);
   const {
     first_name,
     last_name,
     email,
     password,
+  
     bYear,
     bMonth,
     bDay,
     gender,
-  } = user;
+  } = userInfo;
+  const {user,count,loading,isSuccess,message,successMessage,error}=useSelector((state)=>state.user)
+//   console.log("Fetched UserInfo");
+// console.log(isSuccess);
+// console.log(user);
   const yearTemp = new Date().getFullYear();
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserInfo({ ...userInfo, [name]: value });
   };
+
+  const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
+
+  // const user2 = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+     dispatch(setUser2(user2));
+    console.log("user2");
+    console.log(user2);
+    console.log("user");
+    console.log(user);
+    console.log(count);
+    console.log(message);
+    console.log(isSuccess);
+    console.log("Error");
+    console.log(error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
+
   const years = Array.from(new Array(108), (val, index) => yearTemp - index);
   const months = Array.from(new Array(12), (val, index) => 1 + index);
   const getDays = () => {
@@ -75,19 +103,43 @@ const RegisterForm = ({toggleVisible}) => {
   const [dateError, setDateError] = useState("");
   const [genderError, setGenderError] = useState("");
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
+   const [success, setSuccess] = useState("");
+  // const [loading, setLoading] = useState(false);
 
- const registerSubmit = async () => {
-  try {
-    console.log(1);
-  } catch (error) {
-    console.log(error.message);
-  }
-   };
+  // const server_url="http://localhost:8000"
+const registerSubmit=async()=>{
+  setTimeout(()=>{
+    dispatch(register(userInfo));
+    dispatch(login_visible_false())
+    navigate("/login")
+  },2000)
+ 
+}
+//  const registerSubmit = async () => {
+//   try {
+//     const {data}=await http.post(`http://localhost:8000/register`,userInfo)
+//     setError("")
+//     setSuccess(data.message);
+//     const {message,...rest}=data
+//     console.log(rest);
+//     setTimeout(()=>{
+//       dispatch(login(rest));
+//       Cookies.set("user", JSON.stringify(rest));
+//       navigate("/login")
+//     },2000)
+//     // console.log(1);
+//   } catch (error) {
+//     console.log(error.message);
+//     setLoading(false)
+//     setSuccess("")
+//     setError(error.response.data.message)
+//   }
+//    };
   return (
     <div className="blur">
+      {isSuccess}
+      <button onClick={()=>dispatch(truly())} >+</button>
       <div className="register">
         <div className="register_header">
           <i className="exit_icon" 
@@ -95,6 +147,7 @@ const RegisterForm = ({toggleVisible}) => {
           
           ></i>
           <span>Sign Up</span>
+        
           <span>it's quick and easy</span>
         </div>
         <Formik
@@ -131,7 +184,7 @@ const RegisterForm = ({toggleVisible}) => {
             } else {
               setDateError("");
               setGenderError("");
-              // registerSubmit();
+               registerSubmit();
             }
           }}
         >
@@ -201,11 +254,11 @@ const RegisterForm = ({toggleVisible}) => {
                 notifications from us and can opt out at any time.
               </div>
               <div className="reg_btn_wrapper">
-                <button className="blue_btn open_signup">Sign Up</button>
+                <button className="blue_btn open_signup" type="submit">Sign Up</button>
               </div>
               <DotLoader color="#1876f2" loading={loading} size={30} />
               {error && <div className="error_text">{error}</div>}
-              {success && <div className="success_text">{success}</div>}
+              {successMessage && <div className="success_text">{successMessage}</div>}
             </Form>
           )}
         </Formik>

@@ -4,10 +4,9 @@ import App from "./App.jsx";
 import "./index.css";
 import "./styles/dark.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import store from "./redux/store.jsx";
 import { Provider } from "react-redux";
-// import { createStore } from "redux";
-// const store =createStore
+import store from "./reducer/store.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
