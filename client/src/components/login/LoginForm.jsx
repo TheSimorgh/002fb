@@ -18,9 +18,9 @@ const loginInfos = {
   };
 // eslint-disable-next-line react/prop-types
 const LoginForm = ({toggleVisible}) => {
-  const {user,error,loading}=useSelector((state)=>state.user)
+  const {error,loading}=useSelector((state)=>state.user)
   const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
-
+const [user,setUser]=useState("")
   console.log("User Login");
   console.log(user);
   console.log("User2 Login");
@@ -41,8 +41,7 @@ const LoginForm = ({toggleVisible}) => {
         .max(100),
       password: Yup.string().required("Password is required"),
     });
-    // const [error, setError] = useState("");
-    // const [loading, setLoading] = useState(false);
+
     
 
 
@@ -50,30 +49,27 @@ const LoginForm = ({toggleVisible}) => {
 
     // const loginSubmit = async () => {
     //   try {
-    
-    //     const {data}=await http.post(`/register`,login)
-    //     setLoading(true);
-
+    //     const {data}=await http.post(`http://localhost:8000/login`,login)
+    //     // setLoading(true);
+    //     setUser(data)
     //     setTimeout(()=>{
-    //       Cookies.set("user", JSON.stringify(data));
-    //       navigate("/register")
+    //       // Cookies.set("user", JSON.stringify(data));
+    //       // navigate("/register")
     //     },3000)
     //     console.log(1);
     //   } catch (error) {
     //     console.log(error.message);
-    //     setLoading(false);
-    //     setError(error.response.data.message);
+    //     // setLoading(false);
+    //     // setError(error.response.data.message);
     //   }
     //    };
 
 
        const loginSubmit=async()=>{
+        dispatch(signin(login))
         setTimeout(()=>{
-          dispatch(signin(loginInfos));
           navigate("/")
-        },2000)
-       
-       
+        },1000)        
       }
     return (
       <div className="login_wrap">

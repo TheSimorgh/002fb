@@ -1,3 +1,4 @@
 https://www.freecodecamp.org/news/how-to-install-tailwindcss-in-react/
 
 react-responsive
+https://medium.com/geekculture/redux-persist-redux-toolkit-implementation-made-easy-for-react-native-and-react-js-831ee1e3f22b

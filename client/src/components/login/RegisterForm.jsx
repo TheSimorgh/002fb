@@ -55,7 +55,7 @@ const RegisterForm = ({toggleVisible}) => {
   };
 
   const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
-
+console.log(successMessage);
   // const user2 = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
      dispatch(setUser2(user2));
@@ -103,15 +103,15 @@ const RegisterForm = ({toggleVisible}) => {
   const [dateError, setDateError] = useState("");
   const [genderError, setGenderError] = useState("");
 
-  // const [error, setError] = useState("");
+
    const [success, setSuccess] = useState("");
-  // const [loading, setLoading] = useState(false);
+
 
   // const server_url="http://localhost:8000"
 const registerSubmit=async()=>{
   setTimeout(()=>{
     dispatch(register(userInfo));
-    dispatch(login_visible_false())
+    // dispatch(login_visible_false())
     navigate("/login")
   },2000)
  

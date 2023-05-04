@@ -8,3 +8,6 @@ export {default as GenderSelect} from "./login/GenderSelect";
 
 export {default as LoginInput} from "./login/inputs/LoginInput/index";
 export {default as RegisterInput} from "./login/inputs/RegisterInput/index";
+
+
+export {default as Header} from "./header/index";
