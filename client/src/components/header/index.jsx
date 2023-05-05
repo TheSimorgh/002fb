@@ -85,7 +85,31 @@ const Header = () => {
 
 
       </div>
-      <div className="header_right"    ></div>
+      <div className="header_right" >
+          <Link
+              to="/profile"
+              className={`profile_link hover1 
+              "active_link"
+              `}
+            >
+              <img src={user?.picture} alt="" />
+              <span>{user?.first_name}</span>
+            </Link>
+            <div className="circle_icon" >
+               <Menu/>
+            </div>
+            <div className="circle_icon" >
+               <Messenger/>
+            </div>
+            <div className="circle_icon" >
+               <Notifications/>
+               <div className="right_notification">5</div>
+            </div>
+            <div className="circle_icon" >
+               <ArrowDown/>
+            </div>
+
+      </div>
 
     </header>
   )
