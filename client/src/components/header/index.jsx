@@ -16,14 +16,16 @@ import {
   Search,
   Watch,
 } from "../../svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import Cookies from "js-cookie";
+import { logout, reset } from "../../reducer/features/userSlice";
 const Header = () => {
+  
     // const { user } = useSelector((user) => ({ ...user }));
     const { user } = useSelector((state) => state.user);
     const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
-
+  const dispatch=useDispatch()
     const color = "#65676b";
     console.log("Header");
     console.log(user);
@@ -107,6 +109,9 @@ const Header = () => {
             </div>
             <div className="circle_icon" >
                <ArrowDown/>
+            </div>
+            <div className="circle_icon" onClick={()=>dispatch(reset())} >
+               Logout
             </div>
 
       </div>
