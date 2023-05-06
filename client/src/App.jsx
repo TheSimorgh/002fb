@@ -6,7 +6,7 @@ import "./styles/icons/icons.css";
 import "./index.css";
 import "./styles/dark.css";
 
-import { Home, Login, Profile } from "./pages";
+import { Home, Login, NotFound, Profile } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 // import { darkTheme_false, darkTheme_true } from "./reducer/features/themeSlice";
@@ -44,6 +44,7 @@ function App() {
         <Route element={<NotLoggedInRoutes />}>
            <Route path="/login" element={<Login />} />
         </Route>
+      <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
   );

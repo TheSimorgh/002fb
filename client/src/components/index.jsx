@@ -19,3 +19,6 @@ export {default as UserMenu} from "./header/user_menu/index";
 export {default as SettingsPrivacy} from "./header/user_menu/SettingsPrivacy";
 export {default as HelpSupport} from "./header/user_menu/HelpSupport";
 export {default as DisplayAccessibility} from "./header/user_menu/DisplayAccessibility";
+
+export {default as LeftMenu} from "./home/left/index";
+// export {default as RightHome} from "./home/right/index";
