@@ -21,6 +21,9 @@ import { useRef, useState } from "react";
 import Cookies from "js-cookie";
 import { logout, reset } from "../../reducer/features/userSlice";
 import SearchMenu from "./SearchMenu";
+import AllMenu from "./AllMenu";
+import useClickOutside from "../../helpers/clickOutside";
+import { all } from "axios";
 const Header = () => {
   // const { user } = useSelector((user) => ({ ...user }));
   const { user } = useSelector((state) => state.user);
@@ -31,6 +34,10 @@ const Header = () => {
   console.log(user);
   console.log(user2);
   const [showSearchMenu,setShowSearchMenu]=useState(false)
+  const [showAllMenu, setShowAllMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const all_menu=useRef(null)
+useClickOutside(all_menu,()=>setShowAllMenu(false))
 
   return (
     <header>
@@ -103,9 +110,11 @@ const Header = () => {
           <img src={user?.picture} alt="" />
           <span>{user?.first_name}</span>
         </Link>
-        <div className="circle_icon">
+        <div className="circle_icon" onClick={()=>setShowAllMenu(prev=>!prev)} ref={all_menu}>
           <Menu />
+          {showAllMenu && <AllMenu />}
         </div>
+      
         <div className="circle_icon">
           <Messenger />
         </div>

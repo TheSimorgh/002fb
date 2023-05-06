@@ -27,7 +27,7 @@ const SearchMenu = ({ color,setShowSearchMenu }) => {
           </div>
         </div>
         <div className="search" ref={input}   onClick={()=>{input.current.focus()}} >
-        {visibleIcon ?  <Search color={color} /> :null}
+        {visibleIcon ? <div> <Search color={color} /> </div>:null}
           <input
             type="text"
             placeholder="Search Facebook"
