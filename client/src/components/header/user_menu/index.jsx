@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+
 import React,{useState,useEffect} from 'react'
 import { logout, reset } from '../../../reducer/features/userSlice';
 import { useDispatch } from 'react-redux';

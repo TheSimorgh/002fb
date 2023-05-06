@@ -311,9 +311,10 @@ header {
   margin-right: 1rem;
   border-radius: 10px;
   height: 550px;
-  width: 170px;
+  width: 190px;
   position: fixed;
   right: 4.5rem;
+  margin-right:-2rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .all_right_header {
@@ -564,6 +565,12 @@ header {
   .all_left {
     width: 250px;
   }
+  .all_right {
+   /* margin-left: -1rem; */
+   width: 170px;
+    /* left: 5rem; */
+
+  }
 }
 @media (max-width: 550px) {
   .middle_icon:nth-child(1) {
@@ -587,8 +594,9 @@ header {
   .all_right {
     position: relative;
     width: 100%;
-    padding-left: 3rem;
+    padding-left: 1rem;
     margin-bottom: 1rem;
+    left:3px
   }
 }
 @media (max-width: 400px) {

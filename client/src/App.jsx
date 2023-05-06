@@ -7,6 +7,10 @@ import "./index.css";
 import "./styles/dark.css";
 
 import { Home, Login, Profile } from "./pages";
+import LoggedInRoutes from "./routes/LoggedInRoutes";
+import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
+// import { darkTheme_false, darkTheme_true } from "./reducer/features/themeSlice";
+// import { useSelector } from "react-redux";
 
 {
   /* <a href="https://vitejs.dev" target="_blank">
@@ -18,11 +22,9 @@ import { Home, Login, Profile } from "./pages";
 }
 
 const data = [
-  { path: "/login", element: <Login /> },
+  // { path: "/login", element: <Login /> },
   { path: "/profile", element: <Profile /> },
   { path: "/", element: <Home /> },
-
-
 ];
 function App() {
   // (async () => {
@@ -32,13 +34,16 @@ function App() {
   // })();
 
   return (
-    <div className="container mx-auto h-screen bg-dark">
+    <div className={`"container mx-auto h-screen bg-dark` } >
       <Routes>
-        {/* <Route path="/login" element={<Login/>}  />
-       <Route path="/profile" element={<Profile/>}  /> */}
-        {data.map((e, i) => (
-          <Route path={e.path} element={e.element} key={i} />
-        ))}
+        <Route element={<LoggedInRoutes />}>
+          {data.map((e, i) => (
+            <Route path={e.path} element={e.element} key={i} />
+          ))}
+        </Route>
+        <Route element={<NotLoggedInRoutes />}>
+           <Route path="/login" element={<Login />} />
+        </Route>
       </Routes>
     </div>
   );
