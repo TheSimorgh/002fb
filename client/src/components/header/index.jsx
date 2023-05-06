@@ -20,20 +20,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import Cookies from "js-cookie";
 import { logout, reset } from "../../reducer/features/userSlice";
+import SearchMenu from "./SearchMenu";
 const Header = () => {
-  
-    // const { user } = useSelector((user) => ({ ...user }));
-    const { user } = useSelector((state) => state.user);
-    const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
-  const dispatch=useDispatch()
-    const color = "#65676b";
-    console.log("Header");
-    console.log(user);
-    console.log(user2);
+  // const { user } = useSelector((user) => ({ ...user }));
+  const { user } = useSelector((state) => state.user);
+  const user2 = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
+  const dispatch = useDispatch();
+  const color = "#65676b";
+  console.log("Header");
+  console.log(user);
+  console.log(user2);
+  const [showSearchMenu,setShowSearchMenu]=useState(false)
 
   return (
     <header>
-     <div className="header_left">
+      <div className="header_left">
+   
         <Link to="/" className="header_logo">
           <div className="circle">
             <Logo />
@@ -50,16 +52,22 @@ const Header = () => {
             type="text"
             placeholder="Search Facebook"
             className="hide_input"
+            onClick={()=>setShowSearchMenu(prev=>!prev)}
           />
         </div>
-    </div>
-      <div className="header_middle" >
-      <Link
+  
+      </div>
+
+     {showSearchMenu ?  <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} /> : null}
+
+      <div className="header_middle">
+        <Link
           to="/"
           className={`middle_icon home active`}
-          onClick={() => {}
+          onClick={
+            () => {}
             // getAllPosts()
-        }
+          }
         >
           {/* {page === "home" ? <HomeActive /> : <Home color={color} />} */}
           <Home color={color} />
@@ -84,40 +92,36 @@ const Header = () => {
         <Link to="/" className="middle_icon hover1 ">
           <Gaming color={color} />
         </Link>
-
-
       </div>
-      <div className="header_right" >
-          <Link
-              to="/profile"
-              className={`profile_link hover1 
+      <div className="header_right">
+        <Link
+          to="/profile"
+          className={`profile_link hover1 
               "active_link"
               `}
-            >
-              <img src={user?.picture} alt="" />
-              <span>{user?.first_name}</span>
-            </Link>
-            <div className="circle_icon" >
-               <Menu/>
-            </div>
-            <div className="circle_icon" >
-               <Messenger/>
-            </div>
-            <div className="circle_icon" >
-               <Notifications/>
-               <div className="right_notification">5</div>
-            </div>
-            <div className="circle_icon" >
-               <ArrowDown/>
-            </div>
-            <div className="circle_icon" onClick={()=>dispatch(reset())} >
-               Logout
-            </div>
-
+        >
+          <img src={user?.picture} alt="" />
+          <span>{user?.first_name}</span>
+        </Link>
+        <div className="circle_icon">
+          <Menu />
+        </div>
+        <div className="circle_icon">
+          <Messenger />
+        </div>
+        <div className="circle_icon">
+          <Notifications />
+          <div className="right_notification">5</div>
+        </div>
+        <div className="circle_icon">
+          <ArrowDown />
+        </div>
+        <div className="circle_icon" onClick={() => dispatch(reset())}>
+          Logout
+        </div>
       </div>
-
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

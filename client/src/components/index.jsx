@@ -11,3 +11,4 @@ export {default as RegisterInput} from "./login/inputs/RegisterInput/index";
 
 
 export {default as Header} from "./header/index";
+export {default as SearchMenu} from "./header/SearchMenu";
