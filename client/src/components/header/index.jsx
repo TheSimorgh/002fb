@@ -23,26 +23,29 @@ import { logout, reset } from "../../reducer/features/userSlice";
 import SearchMenu from "./SearchMenu";
 import AllMenu from "./AllMenu";
 import useClickOutside from "../../helpers/clickOutside";
-import { all } from "axios";
+import UserMenu from "./user_menu";
 const Header = () => {
   // const { user } = useSelector((user) => ({ ...user }));
   const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((user) => ({...user}));
+
   const user2 = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
   const dispatch = useDispatch();
   const color = "#65676b";
   console.log("Header");
+  console.log("user");
   console.log(user);
   console.log(user2);
-  const [showSearchMenu,setShowSearchMenu]=useState(false)
+  const [showSearchMenu, setShowSearchMenu] = useState(false);
   const [showAllMenu, setShowAllMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const all_menu=useRef(null)
-useClickOutside(all_menu,()=>setShowAllMenu(false))
-
+  const all_menu = useRef(null);
+  const user_menu = useRef(null);
+  useClickOutside(all_menu, () => setShowAllMenu(false));
+  useClickOutside(user_menu, () => setShowUserMenu(false));
   return (
     <header>
       <div className="header_left">
-   
         <Link to="/" className="header_logo">
           <div className="circle">
             <Logo />
@@ -59,13 +62,14 @@ useClickOutside(all_menu,()=>setShowAllMenu(false))
             type="text"
             placeholder="Search Facebook"
             className="hide_input"
-            onClick={()=>setShowSearchMenu(prev=>!prev)}
+            onClick={() => setShowSearchMenu((prev) => !prev)}
           />
         </div>
-  
       </div>
 
-     {showSearchMenu ?  <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} /> : null}
+      {showSearchMenu ? (
+        <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} />
+      ) : null}
 
       <div className="header_middle">
         <Link
@@ -110,11 +114,23 @@ useClickOutside(all_menu,()=>setShowAllMenu(false))
           <img src={user?.picture} alt="" />
           <span>{user?.first_name}</span>
         </Link>
-        <div className="circle_icon" onClick={()=>setShowAllMenu(prev=>!prev)} ref={all_menu}>
-          <Menu />
+        <div
+          className={`circle_icon hover1 ${showAllMenu && "active_header"}`}
+          ref={all_menu}
+        >
+          <div
+            onClick={() => {
+              setShowAllMenu((prev) => !prev);
+            }}
+          >
+            <div style={{ transform: "translateY(2px)" }}>
+              <Menu />
+            </div>
+          </div>
+
           {showAllMenu && <AllMenu />}
         </div>
-      
+
         <div className="circle_icon">
           <Messenger />
         </div>
@@ -122,12 +138,23 @@ useClickOutside(all_menu,()=>setShowAllMenu(false))
           <Notifications />
           <div className="right_notification">5</div>
         </div>
-        <div className="circle_icon">
-          <ArrowDown />
+        <div
+          className={`circle_icon hover1 ${showUserMenu && "active_header"}`}
+          ref={user_menu}
+        >
+          <div
+            onClick={() => {
+              setShowUserMenu((prev) => !prev);
+            }}
+          >
+            <div style={{ transform: "translateY(2px)" }}>
+              <ArrowDown />
+            </div>
+          </div>
+
+          {showUserMenu && <UserMenu user={user} />}
         </div>
-        <div className="circle_icon" onClick={() => dispatch(reset())}>
-          Logout
-        </div>
+     
       </div>
     </header>
   );

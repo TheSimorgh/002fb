@@ -12,3 +12,10 @@ export {default as RegisterInput} from "./login/inputs/RegisterInput/index";
 
 export {default as Header} from "./header/index";
 export {default as SearchMenu} from "./header/SearchMenu";
+export {default as AllMenu} from "./header/AllMenu";
+export {default as AllMenuItem} from "./header/AllMenuItem";
+
+export {default as UserMenu} from "./header/user_menu/index";
+export {default as SettingsPrivacy} from "./header/user_menu/SettingsPrivacy";
+export {default as HelpSupport} from "./header/user_menu/HelpSupport";
+export {default as DisplayAccessibility} from "./header/user_menu/DisplayAccessibility";
