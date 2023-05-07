@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 // import LeftLink from "./LeftLink";
 import { Dots, NewRoom, Search } from "../../../svg";

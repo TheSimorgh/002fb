@@ -74,7 +74,7 @@ const Header = () => {
       <div className="header_middle">
         <Link
           to="/"
-          className={`middle_icon home active`}
+          className={`middle_icon  active`}
           onClick={
             () => {}
             // getAllPosts()
@@ -86,7 +86,7 @@ const Header = () => {
         <Link
           to="/friends"
           className={`middle_icon 
-          }
+        
           
           `}
         >

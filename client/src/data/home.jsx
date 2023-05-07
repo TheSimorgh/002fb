@@ -110,31 +110,45 @@ export const left = [
       img: "weather",
     },
   ];
-  export const stories = [
-    {
-      profile_picture: "../../stories/profile1.jpg",
-      profile_name: "Elon Musk",
-      image: "../../stories/1.jpg",
-    },
-    {
-      profile_picture: "../../stories/profile2.jpg",
-      profile_name: "South park",
-      image: "../../stories/2.png",
-    },
-    {
-      profile_picture: "../../stories/profile3.png",
-      profile_name: "The Sopranos",
-      image: "../../stories/3.jpg",
-    },
-    {
-      profile_picture: "../../stories/profile4.jfif",
-      profile_name: "Football World",
-      image: "../../stories/4.jpg",
-    },
-    {
-      profile_picture: "../../stories/profile5.png",
-      profile_name: "The Witcher Wild Hunt",
-      image: "../../stories/5.jfif",
-    },
-  ];
+  // import p1 from "../../public/stories/1.jpg"
+  // import p2 from "../../public/stories/profile2.jpg"
+  // import p3 from "../../public/stories/profile3.png"
+  // import p4 from "../../public/stories/profile4.png"
+  // import p5 from "../../public/stories/profile5.png"
+  // import i1 from "../../public/stories/1.jpg"
+  // import i2 from "../../public/stories/2.png"
+  // import i3 from "../../public/stories/3.jpg"
+  // import i4 from "../../stories/4.jpg"
+  // import i5 from  "../../stories/5.jpg"
+
+
+  // export const stories = [
+  //   {
+  //     profile_picture: p1,
+  //     profile_name: "Elon Musk",
+  //     image:i1 ,
+  //   },
+  //   {
+  //     profile_picture: p2,
+  //     profile_name: "South park",
+  //     image: i2,
+  //   },
+  //   {
+  //     profile_picture:p3 ,
+  //     profile_name: "The Sopranos",
+  //     image:i3 ,
+
+  //   },
+  //   {
+  //     profile_picture: p4,
+  //     profile_name: "Football World",
+  //     image:i4 ,
+
+  //   },
+  //   {
+  //     profile_picture:p5 ,
+  //     profile_name: "The Witcher Wild Hunt",
+  //     image:i5,
+  //   },
+  // ];
   

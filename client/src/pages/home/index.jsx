@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
-import { Header, RightHome } from "../../components"
+import { Header, RightHome, Stories } from "../../components"
 import Cookies from "js-cookie"
-import { useRef, useState } from "react"
+import { useRef, useState,useEffect } from "react"
 import useClickOutside from "../../helpers/clickOutside"
 import { homeToggleFun, home_visible_false, home_visible_true } from "../../reducer/features/togglesSlice"
 import LeftHome from "../../components/home/left"
-// import "./style.css";
+ import "./style.css";
 
 
 
@@ -18,6 +18,7 @@ const Home = () => {
   // console.log(user2);
   //////////////////////////////////
   const el =useRef(null)
+
   useClickOutside(el,()=>{el.current.style.display="none"})
   useClickOutside(el,()=>setVisible(false))
 const {home_visible}=useSelector(state=>state.toggles)
@@ -26,11 +27,20 @@ console.log("home_visible");
 console.log(home_visible);
 const [visible,setVisible]=useState(true)
 const {user}=useSelector(state=>state.user)
+
+const middle = useRef(null);
+const [height, setHeight] = useState();
+useEffect(() => {
+  setHeight(middle.current.clientHeight);
+}, [ height]);
   return (
-    <div>
+    <div className="home" style={{ height: `${height + 150}px` }}>
      <Header />
      <LeftHome user={user} /> 
      <RightHome user={user}/>
+     <div className="home_middle" ref={middle}>
+       <Stories /> 
+     </div>
      {/* <div className="home_middle">
       Middle
      </div> */}
