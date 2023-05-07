@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const { readdirSync } = require("fs");
-const dotenv = require("dotenv");
 const userRoutes = require("./routes/user");
 const dbConnect = require("./config/dbConfig");
+const dotenv = require("dotenv");
 dotenv.config();
 mongoose.set("strictQuery", true);
 const app = express();
@@ -41,9 +41,9 @@ app.use(
     useTempFiles: true,
   })
 );
-app.get("/",(req,res)=>{
-    res.send("XXXXXXX")
-})
+// app.get("/",(req,res)=>{
+//     res.send("XXXXXXX")
+// })
 
 readdirSync("./routes").map((r)=>app.use("/",require("./routes/"+r)))
 // console.log(readdirSync("./routes"));

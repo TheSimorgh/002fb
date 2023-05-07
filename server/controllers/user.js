@@ -93,7 +93,7 @@ exports.activateAccount = async (req, res) => {
     }
   };
 
-  exports.login =async()=>{
+  exports.login =async(req,res)=>{
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -123,5 +123,15 @@ exports.activateAccount = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
 
+    }
+  }
+
+
+  exports.auth=async (req,res)=>{
+    try {
+      console.log(`auth`);
+      console.log(req.user);
+    } catch (error) {
+      
     }
   }
