@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux"
-import { Header, RightHome, Stories } from "../../components"
+import { CreatePost, Header, RightHome, Stories } from "../../components"
 import Cookies from "js-cookie"
 import { useRef, useState,useEffect } from "react"
 import useClickOutside from "../../helpers/clickOutside"
@@ -40,6 +41,7 @@ useEffect(() => {
      <RightHome user={user}/>
      <div className="home_middle" ref={middle}>
        <Stories /> 
+       <CreatePost  user={user} setVisible={setVisible} />
      </div>
      {/* <div className="home_middle">
       Middle

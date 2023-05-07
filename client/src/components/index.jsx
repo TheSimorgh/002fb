@@ -24,3 +24,6 @@ export {default as LeftMenu} from "./home/left/index";
 export {default as RightHome} from "./home/right/index";
 export {default as Stories} from "./home/stories/index";
 
+export {default as CreatePost} from "./create_post/index";
+
+
