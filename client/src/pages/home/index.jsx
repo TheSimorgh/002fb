@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { Header } from "../../components"
+import { Header, RightHome } from "../../components"
 import Cookies from "js-cookie"
 import { useRef, useState } from "react"
 import useClickOutside from "../../helpers/clickOutside"
@@ -30,6 +30,7 @@ const {user}=useSelector(state=>state.user)
     <div>
      <Header />
      <LeftHome user={user} /> 
+     <RightHome user={user}/>
      {/* <div className="home_middle">
       Middle
      </div> */}
