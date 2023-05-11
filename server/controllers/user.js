@@ -6,7 +6,7 @@ const { generateToken } = require("../helpers/token");
 const { sendVerificationEmail } = require("../helpers/mailer");
 const dotenv = require("dotenv");
 dotenv.config();
-const BASE_URL="http:://localhost:5137"
+const BASE_URL="http://localhost:5173"
 
 exports.register=async(req,res)=>{
    try {
@@ -84,9 +84,7 @@ exports.activateAccount = async (req, res) => {
           .json({ message: "This email is already activated." });
       } else {
         await User.findByIdAndUpdate(user.id, { verified: true });
-        return res
-          .status(200)
-          .json({ message: "Account has beeen activated successfully." });
+        return res.status(200).json({ message: "Account has been activated successfully." });
       }
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -133,5 +131,29 @@ exports.activateAccount = async (req, res) => {
       console.log(req.user);
     } catch (error) {
       
+    }
+  }
+
+  exports.sendVerification=async (req,res)=>{
+    try {
+      const id=req.user.id;
+      const user=await User.findById(id)
+      if (user.verified === true) {
+        return res.status(400).json({
+          message: "This account is already activated.",
+        });
+      }
+      const emailVerificationToken = generateToken(
+        { id: user._id.toString() },
+        "30m"
+      );
+      const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
+      sendVerificationEmail(user.email, user.first_name, url);
+      return res.status(200).json({
+        message: "Email verification link has been sent to your email.",
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+
     }
   }
