@@ -55,19 +55,19 @@ const RegisterForm = ({toggleVisible}) => {
   };
 
   const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
-console.log(successMessage);
+// console.log(successMessage);
   // const user2 = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
      dispatch(setUser2(user2));
     console.log("user2");
     console.log(user2);
-    console.log("user");
-    console.log(user);
-    console.log(count);
-    console.log(message);
-    console.log(isSuccess);
-    console.log("Error");
-    console.log(error);
+    // console.log("user");
+    // console.log(user);
+    // console.log(count);
+    // console.log(message);
+    // console.log(isSuccess);
+    // console.log("Error");
+    // console.log(error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
@@ -108,9 +108,9 @@ console.log(successMessage);
 
 
   // const server_url="http://localhost:8000"
-const registerSubmit=async()=>{
+const registerSubmit=()=>{
+  dispatch( register(userInfo));
   setTimeout(()=>{
-    dispatch(register(userInfo));
     // dispatch(login_visible_false())
     navigate("/login")
   },2000)
@@ -138,7 +138,7 @@ const registerSubmit=async()=>{
 //    };
   return (
     <div className="blur">
-      {isSuccess}
+      {/* {isSuccess} */}
       <button onClick={()=>dispatch(truly())} >+</button>
       <div className="register">
         <div className="register_header">

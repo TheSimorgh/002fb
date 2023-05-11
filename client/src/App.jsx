@@ -6,7 +6,7 @@ import "./styles/icons/icons.css";
 import "./index.css";
 import "./styles/dark.css";
 
-import { Home, Login, NotFound, Profile } from "./pages";
+import { Activate, Home, Login, NotFound, Profile } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 // import { darkTheme_false, darkTheme_true } from "./reducer/features/themeSlice";
@@ -25,13 +25,10 @@ const data = [
   // { path: "/login", element: <Login /> },
   { path: "/profile", element: <Profile /> },
   { path: "/", element: <Home /> },
+  { path: "/activate/:token", element: < Activate/> },
 ];
 function App() {
-  // (async () => {
-  //   const res =await fetch("http://localhost:8000")
-  //    console.log(res)
 
-  // })();
 
   return (
     <div className={`"container mx-auto h-screen bg-dark` } >

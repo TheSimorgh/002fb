@@ -23,11 +23,18 @@ const Home = () => {
   useClickOutside(el,()=>{el.current.style.display="none"})
   useClickOutside(el,()=>setVisible(false))
 const {home_visible}=useSelector(state=>state.toggles)
+const [visible,setVisible]=useState(true)
+const {user}=useSelector(state=>state.user)
+const cookie_user= Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
 const dispatch=useDispatch()
 console.log("home_visible");
 console.log(home_visible);
-const [visible,setVisible]=useState(true)
-const {user}=useSelector(state=>state.user)
+console.log("USer");
+console.log(user);
+console.log("Cookie User");
+console.log(cookie_user);
+
+
 
 const middle = useRef(null);
 const [height, setHeight] = useState();

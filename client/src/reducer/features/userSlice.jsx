@@ -35,17 +35,17 @@ export const register = createAsyncThunk(
       Cookies.set("user", JSON.stringify(rest));
       return response.data;
     } catch (error) {
-      console.log(error);
-      console.log(error.message);
-      console.log(error.response.data.message);
+      // console.log(error);
+      // console.log(error.message);
+      // console.log(error.response.data.message);
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
+        (error?.response &&
+          error?.response?.data &&
+          error?.response?.data?.message) ||
+        error?.message ||
         error.toString();
-      // return rejectWithValue(error.response.data.message);
-      return rejectWithValue(message);
+      return rejectWithValue(error?.response?.data?.message);
+      // return rejectWithValue(message);
     }
   }
 );
@@ -81,11 +81,76 @@ export const signin = createAsyncThunk(
     }
   }
 );
+export const activateUserAccount = createAsyncThunk(
+  "user/activateUserAccount",
+  async (userinfo,token,  { rejectWithValue }) => {
+    try {
+      axios;
+      const response = await axios.post(`http://localhost:8000/active`,{token}, { headers: {Authorization: `Bearer ${userinfo.token}`,},});
+      
+      
+      // Cookies.set("user", JSON.stringify(response.data));
+      // Cookies.set("user", JSON.stringify({ ...user, verified: true }));
+
+      // if(!response.ok) {
+      //    throw new Error (response.data.message,response.status)
+      // }
+      // Cookies.set("user", JSON.stringify(response.data));
+      console.log("activateUserAccount = createAsyncThunk");
+      console.log(response.data);
+      console.log("response");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      console.log(error.message);
+      console.log(error.response.data.message);
+      const message =
+        (error?.response &&
+          error?.response?.data &&
+          error?.response?.data?.message) ||
+        error?.message ||
+        error.toString();      // return rejectWithValue(error.response.data.message);
+      // return rejectWithValue(message);
+      return rejectWithValue(error?.response?.data?.message);
+
+    }
+  }
+);
+// const activate1UserAccount = async () => {
+//   try {
+//     setLoading(true);
+//     const { data } = await axios.post(
+//       `${backend_url}/activate`,
+//       { token },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${user.token}`,
+//         },
+//       }
+//     );
+//     setSuccess(data.message);
+//     Cookies.set("user", JSON.stringify({ ...user, verified: true }));
+//     dispatch({
+//       type: "VERIFY",
+//       payload: true,
+//     });
+
+//     setTimeout(() => {
+//       navigate("/");
+//     }, 3000);
+//   } catch (error) {
+//     setError(error.response.data.message);
+//     setTimeout(() => {
+//       navigate("/");
+//     }, 3000);
+//   }
+// };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    loadingTruly:(state)=>{state.loading=true},
     reset:(state)=>{
       state.user= null
       state.isError= false
@@ -94,6 +159,15 @@ const userSlice = createSlice({
       state.message= ""
       state.error= ""
       state.successMessage=""
+    },
+    user_verification:(state)=>{
+      state.user.verify
+    },
+    activate:(state)=>{
+      state.user.verify=true
+      // Cookies.set("user", JSON.stringify({ ...state, verified: true }));
+      Cookies.set("user", JSON.stringify( state.user ));
+
     },
     setUser2: (state, action) => {
       state.user = action.payload;
@@ -133,6 +207,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.error = action.payload;
         state.message = action.payload;
+        state.successMessage = null;
         state.user=null
         // state.successMessage = "";
       }).addCase(signin.pending, (state) => {
@@ -154,6 +229,26 @@ const userSlice = createSlice({
         state.error = action.payload;
         state.message = action.payload;
         state.user=null
+        // state.successMessage = "";
+      }).addCase(activateUserAccount.pending, (state) => {
+        state.isSuccess = false;
+        state.loading = true;
+      })
+      .addCase(activateUserAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isSuccess = true;
+        state.user.verified=true;
+        // state.user=action.payload
+        // const { message, ...rest } = state.user;
+        // state.user = rest
+        state.successMessage = action.payload;
+      })
+      .addCase(activateUserAccount.rejected, (state, action) => {
+        state.loading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.error = action.payload;
+        state.message = action.payload;
         // state.successMessage = "";
       });
       
@@ -183,5 +278,5 @@ const userSlice = createSlice({
   // }
 });
 
-export const { logout, truly, setUser2,reset } = userSlice.actions;
+export const { logout, truly, setUser2,reset,loadingTruly,user_verification,activate } = userSlice.actions;
 export default userSlice.reducer;
