@@ -23,6 +23,9 @@ export {default as DisplayAccessibility} from "./header/user_menu/DisplayAccessi
 export {default as LeftHome} from "./home/left/index";
 export {default as RightHome} from "./home/right/index";
 export {default as Stories} from "./home/stories/index";
+export {default as SendVerification} from "./home/sendVerification/index";
+
+
 
 export {default as CreatePost} from "./create_post/index";
 

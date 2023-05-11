@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux"
-import { CreatePost, Header, RightHome, Stories } from "../../components"
+import { CreatePost, Header, RightHome, SendVerification, Stories } from "../../components"
 import Cookies from "js-cookie"
 import { useRef, useState,useEffect } from "react"
 import useClickOutside from "../../helpers/clickOutside"
@@ -41,6 +41,7 @@ const [height, setHeight] = useState();
 useEffect(() => {
   setHeight(middle.current.clientHeight);
 }, [ height]);
+
   return (
     <div className="home" style={{ height: `${height + 150}px` }}>
      <Header />
@@ -48,6 +49,7 @@ useEffect(() => {
      <RightHome user={user}/>
      <div className="home_middle" ref={middle}>
        <Stories /> 
+       {user.verified === false && <SendVerification user={user} />}
        <CreatePost  user={user} setVisible={setVisible} />
      </div>
      {/* <div className="home_middle">
