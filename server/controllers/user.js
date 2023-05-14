@@ -3,8 +3,10 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/token");
-const { sendVerificationEmail } = require("../helpers/mailer");
+const { sendVerificationEmail, sendResetCode } = require("../helpers/mailer");
 const dotenv = require("dotenv");
+const Code = require("../models/Code");
+const generateCode = require("../helpers/generateCode");
 dotenv.config();
 const BASE_URL="http://localhost:5173"
 
@@ -170,6 +172,24 @@ exports.activateAccount = async (req, res) => {
       return res.status(200).json({
         email: user.email,
         picture: user.picture,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+
+    }
+  }
+  
+  exports.sendResetPasswordCode=async (req,res)=>{
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({ email }).select("-password");
+      await Code.findOneAndRemove({ user: user._id });
+      const code =generateCode(5);
+      const savedCode=await new Code({code,user:user._id}).save()
+      sendResetCode(user.email,user.first_name,code)
+
+      return res.status(200).json({
+        message: "Email reset code has been sent to your email",
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
