@@ -74,7 +74,7 @@ const Activate = () => {
           },
         }
       );
-      setSuccess(data.message);
+      setSuccess(data.message);  
       Cookies.set("user", JSON.stringify({ ...user, verified: true }));
 
       dispatch(activate())
@@ -90,7 +90,7 @@ const Activate = () => {
   };
   return (
     <div className="home">
-      {/* {successMessage || msg ? (
+      {/* {successMessage || msg ? ( 
         <ActivateForm
           type="success"
           text={successMessage}

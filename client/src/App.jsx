@@ -6,7 +6,7 @@ import "./styles/icons/icons.css";
 import "./index.css";
 import "./styles/dark.css";
 
-import { Activate, Home, Login, NotFound, Profile } from "./pages";
+import { Activate, Home, Login, NotFound, Profile, Reset } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 // import { darkTheme_false, darkTheme_true } from "./reducer/features/themeSlice";
@@ -27,6 +27,7 @@ const data = [
   { path: "/", element: <Home /> },
   { path: "/activate/:token", element: < Activate/> },
 ];
+export const server_url="http://localhost:8000"
 function App() {
 
 
@@ -42,6 +43,8 @@ function App() {
            <Route path="/login" element={<Login />} />
         </Route>
       <Route path="*" element={<NotFound/>} />
+      <Route path="/reset" element={<Reset/>} />
+
       </Routes>
     </div>
   );
