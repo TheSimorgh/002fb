@@ -9,8 +9,10 @@ import "./styles/dark.css";
 import { Activate, Home, Login, NotFound, Profile, Reset } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
+
+import CreatePostPopup from "./components/create_post_popup";
+import { useSelector } from "react-redux";
 // import { darkTheme_false, darkTheme_true } from "./reducer/features/themeSlice";
-// import { useSelector } from "react-redux";
 
 {
   /* <a href="https://vitejs.dev" target="_blank">
@@ -27,12 +29,15 @@ const data = [
   { path: "/", element: <Home /> },
   { path: "/activate/:token", element: < Activate/> },
 ];
+
 export const server_url="http://localhost:8000"
 function App() {
+  const {user}=useSelector(state=>state.user)
 
 
   return (
     <div className={`"container mx-auto h-screen bg-dark` } >
+      <CreatePostPopup user={user} />
       <Routes>
         <Route element={<LoggedInRoutes />}>
           {data.map((e, i) => (

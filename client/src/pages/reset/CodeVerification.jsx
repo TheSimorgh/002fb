@@ -3,10 +3,10 @@
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import LoginInput from "../../components/inputs/loginInput";
 import * as Yup from "yup";
 import axios from "axios";
 import { server_url } from '../../App';
+import { LoginInput } from "../../components";
 
 const CodeVerification = ({
   code,

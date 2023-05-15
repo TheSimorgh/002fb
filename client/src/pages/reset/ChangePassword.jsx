@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Form, Formik } from "formik";
 import { useState } from "react";
-import LoginInput from "../../components/inputs/loginInput";
 import * as Yup from "yup";
 import axios from "axios";
 import { server_url } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
+import { LoginInput } from "../../components";
 const ChangePassword = ({
     password,
     setPassword,
