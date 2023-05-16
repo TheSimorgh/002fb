@@ -1,4 +1,4 @@
-exports.uploadImages = async (req, res) => {
+exports.upload2Images = async (req, res) => {
     try {
       res.json("welcome from image upload");
     } catch (error) {
