@@ -1,10 +1,10 @@
 const express = require("express");
 const { imgUploadMidd } = require("../middlwares/imgUploadMidd");
-const { upload2Images } = require("../controllers/upload2");
+const { uploadImages } = require("../controllers/upload");
 
 
 const router = express.Router()
-router.post("/uploadImages",imgUploadMidd, upload2Images)
+router.post("/uploadImages",imgUploadMidd, uploadImages)
 
 
 module.exports = router;

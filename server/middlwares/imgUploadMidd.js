@@ -8,15 +8,15 @@ exports.imgUploadMidd=async(req,res,next)=>{
           }
           let files = Object.values(req.files).flat();
           files.forEach((file) => {
-            // if (
-            //   file.mimetype !== "image/jpeg" &&
-            //   file.mimetype !== "image/png" &&
-            //   file.mimetype !== "image/gif" &&
-            //   file.mimetype !== "image/webp"
-            // ) {
-            //   removeTmp(file.tempFilePath);
-            //   return res.status(400).json({ message: "Unsupported format." });
-            // }
+            if (
+              file.mimetype !== "image/jpeg" &&
+              file.mimetype !== "image/png" &&
+              file.mimetype !== "image/gif" &&
+              file.mimetype !== "image/webp"
+            ) {
+              removeTmp(file.tempFilePath);
+              return res.status(400).json({ message: "Unsupported format." });
+            }
             if (file.size > 1024 * 1024 * 5) {
               removeTmp(file.tempFilePath);
               return res.status(400).json({ message: "File size is too large." });
