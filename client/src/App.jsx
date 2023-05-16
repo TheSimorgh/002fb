@@ -12,6 +12,7 @@ import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 
 import CreatePostPopup from "./components/create_post_popup";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 // import { darkTheme_false, darkTheme_true } from "./reducer/features/themeSlice";
 
 {
@@ -23,21 +24,28 @@ import { useSelector } from "react-redux";
 </a> */
 }
 
-const data = [
-  // { path: "/login", element: <Login /> },
-  { path: "/profile", element: <Profile /> },
-  { path: "/", element: <Home /> },
-  { path: "/activate/:token", element: < Activate/> },
-];
 
 export const server_url="http://localhost:8000"
 function App() {
   const {user}=useSelector(state=>state.user)
+  const [visible, setVisible] = useState(false);
 
-
+  const data = [
+    // { path: "/login", element: <Login /> },
+    { path: "/profile", element: <Profile /> },
+    { path: "/", element: <Home setVisible={setVisible} visible={visible} /> },
+    { path: "/activate/:token", element: < Activate/> },
+  ];
+  
   return (
     <div className={`"container mx-auto h-screen bg-dark` } >
-      <CreatePostPopup user={user} />
+          {visible && (
+        <CreatePostPopup
+          user={user}
+          setVisible={setVisible}
+       
+        />
+      )}
       <Routes>
         <Route element={<LoggedInRoutes />}>
           {data.map((e, i) => (

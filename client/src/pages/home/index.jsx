@@ -10,7 +10,7 @@ import LeftHome from "../../components/home/left"
 
 
 
-const Home = () => {
+const Home = ({setVisible,visible}) => {
   // const {user}=useSelector((state)=>state.user)
   // const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
 // const [data,setData]=useState(user2)
@@ -19,11 +19,13 @@ const Home = () => {
   // console.log(user2);
   //////////////////////////////////
   const el =useRef(null)
+  console.log("visible");
 
+console.log(visible);
   useClickOutside(el,()=>{el.current.style.display="none"})
   useClickOutside(el,()=>setVisible(false))
 const {home_visible}=useSelector(state=>state.toggles)
-const [visible,setVisible]=useState(true)
+
 const {user}=useSelector(state=>state.user)
 const cookie_user= Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
 const dispatch=useDispatch()
@@ -54,15 +56,6 @@ const [height, setHeight] = useState();
        {user.verified === false && <SendVerification user={user} />}
        <CreatePost  user={user} setVisible={setVisible} />
      </div>
-     {/* <div className="home_middle">
-      Middle
-     </div> */}
-     {/* <div style={{marginTop:"100px"}}></div>
-    {visible ?  <div  ref={el} className="card" ></div> :null} */}
-     {/* <div ref={el} className="card" ></div> */}
-    {/* <p style={{colo:"black",top:"300"}} >{JSON.stringify(data)}</p> */}
-    {/* <button onClick={()=>dispatch(homeToggleFun)} >+</button> */}
-    {/* <button onClick={()=>setVisible(true)} >++</button> */}
     </div>
   )
 }

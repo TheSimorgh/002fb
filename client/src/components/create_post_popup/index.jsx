@@ -8,14 +8,13 @@ import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
 import ImagePreview from "./ImagePreview";
 const CreatePostPopup = ({
   user,
-  // setVisible,
+  setVisible,
   // posts,
   // dispatch,
   // profile,
 }) => {
   const popup = useRef(null);
   const [text, setText] = useState("");
-  const [visible, setVisible] = useState(true);
   const [showPrev, setShowPrev] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

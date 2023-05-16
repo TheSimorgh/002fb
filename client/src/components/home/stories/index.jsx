@@ -17,26 +17,27 @@ import Story from "./Story";
 // import I4 from "../../../assets/stories/4.jpg"
 // import I5 from "../../../assets/stories/5.jpg"
 
-import P1 from "/stories/profile1.jpg"
-import P2 from "/stories/profile2.jpg"
-import P3 from "/stories/profile3.jpg"
-import P4 from "/stories/profile4.jpg"
-import P5 from "/stories/profile5.jpg"
-import I1 from "/stories/1.jpg"
-import I2 from "/stories/2.jpg"
-import I3 from "/stories/3.jpg"
-import I4 from "/stories/4.jpg"
-import I5 from "/stories/5.jpg"
-// let P1 =require ("../../../../public/stories/profile1.jpg")
-// let P2 =require ("../../../../public/stories/profile2.jpg")
-// let P3 =require ("../../../../public/stories/profile3.jpg")
-// let P4 =require ("../../../../public/stories/profile4.jpg")
-// let P5 =require ("../../../../public/stories/profile5.jpg")
-// let I1 =require ("../../../../public/stories/1.jpg")
-// let I2 =require ("../../../../public/stories/2.jpg")
-// let I3 =require ("../../../../public/stories/3.jpg")
-// let I4 =require ("../../../../public/stories/4.jpg")
-// let I5 =require ("../../../../public/stories/5.jpg")
+import P1 from "../../../assets/stories/profile1.jpg"
+import P2 from "../../../assets/stories/profile2.jpg"
+import P3 from "../../../assets/stories/profile3.jpg"
+import P4 from "../../../assets/stories/profile4.jpg"
+import P5 from "../../../assets/stories/profile5.jpg"
+import I1 from "../../../assets/stories/1.jpg"
+import I2 from "../../../assets/stories/2.jpg"
+import I3 from "../../../assets/stories/3.jpg"
+import I4 from "../../../assets/stories/4.jpg"
+import I5 from "../../../assets/stories/5.jpg"
+
+// import P1  from "../../../../public/stories/profile1.jpg"
+// import P2  from "../../../../public/stories/profile2.jpg"
+// import P3  from "../../../../public/stories/profile3.jpg"
+// import P4  from "../../../../public/stories/profile4.jpg"
+// import P5  from "../../../../public/stories/profile5.jpg"
+// import I1  from "../../../../public/stories/1.jpg"
+// import I2  from "../../../../public/stories/2.jpg"
+// import I3  from "../../../../public/stories/3.jpg"
+// import I4  from "../../../../public/stories/4.jpg"
+// import I5  from "../../../../public/stories/5.jpg"
 // export const stories = [
 //   {
 //     profile_picture: "../../../../public/stories/1.jpg",
