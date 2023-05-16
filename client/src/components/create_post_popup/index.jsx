@@ -16,7 +16,7 @@ const CreatePostPopup = ({
   const popup = useRef(null);
   const [text, setText] = useState("");
   const [visible, setVisible] = useState(true);
-  const [showPrev, setShowPrev] = useState(true);
+  const [showPrev, setShowPrev] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [images, setImages] = useState([]);
@@ -55,7 +55,7 @@ const CreatePostPopup = ({
         </div>
         {!showPrev ? (
           <>
-            <EmojiPickerBackgrounds user={user} setText={setText} text={text} />
+            <EmojiPickerBackgrounds  setBackground={setBackground}background={background} user={user} setText={setText} text={text} />
           </>
         ) : (
           <ImagePreview text={text}
@@ -65,7 +65,9 @@ const CreatePostPopup = ({
           images={images}
           setImages={setImages}
           setShowPrev={setShowPrev}
-          setError={setError}  />
+          setError={setError} 
+                     setBackground={setBackground}
+              background={background} />
         )}
         <AddToYourPost setShowPrev={setShowPrev} />
         <button className="post_submit">Post</button>
