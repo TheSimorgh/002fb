@@ -1,50 +1,41 @@
 /* eslint-disable react/prop-types */
-import React,{useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import Picker from "emoji-picker-react";
 import useClickOutside from "../../helpers/clickOutside";
 import AddToYourPost from "./AddToYourPost";
-
-const CreatePostPopup = ({ user,
-    // setVisible,
-    // posts,
-    // dispatch,
-    // profile,
+import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
+import ImagePreview from "./ImagePreview";
+const CreatePostPopup = ({
+  user,
+  // setVisible,
+  // posts,
+  // dispatch,
+  // profile,
 }) => {
-    const popup = useRef(null);
-    const [text, setText] = useState("");
-    const [visible, setVisible] = useState(true);
-    const [picker, setPicker] = useState(false);
-    const textRef = useRef(null);
-    const [cursorPosition,setCursorPosition]=useState()
-    const [showPrev, setShowPrev] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [images, setImages] = useState([]);
-    const [background, setBackground] = useState("");
+  const popup = useRef(null);
+  const [text, setText] = useState("");
+  const [visible, setVisible] = useState(true);
+  const [showPrev, setShowPrev] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [images, setImages] = useState([]);
+  const [background, setBackground] = useState("");
 
-    useEffect(()=>{
-      textRef.current.selectionEnd=cursorPosition
-    },[cursorPosition])
-    useClickOutside(popup, () => {
-        setVisible(false);
-      });
-      const handleEmoji=({emoji},e)=>{
-        const ref=textRef.current;
-        ref.focus();
-        const start =text.substring(0,ref.selectionStart);
-        const end =text.substring(ref.selectionStart);
-        const newText=start+emoji+end;
-        setText(newText);
-        setCursorPosition(start.length+emoji.length)
-      }
+  useClickOutside(popup, () => {
+    setVisible(false);
+  });
+
   return (
-    <div className="blur" >
+    <div className="blur">
       <div className="postBox" ref={popup}>
         <div className="box_header">
-          <div  className="small_circle"  onClick={() => {
+          <div
+            className="small_circle"
+            onClick={() => {
               setVisible(false);
-            }}>
+            }}
+          >
             <i className="exit_icon"></i>
           </div>
           <span>Create Post</span>
@@ -63,37 +54,21 @@ const CreatePostPopup = ({ user,
           </div>
         </div>
         {!showPrev ? (
-            <>
-            <div className="flex_center">
-            <textarea maxLength="100"
-            ref={textRef}
-            value={text}
-            placeholder={`What is on your mind,  ${user.first_name}`}
-           className="post_input"
-           onChange={(e)=>setText(e.target.value)}
-           
-           ></textarea>
-            </div>
-            </>
-        ):(2)}
-        <div className="post_emojis_wrap" >
-         {picker ?  <div className="comment_emoji_picker rlmove" >
-            <Picker onEmojiClick={handleEmoji} />
-          </div> :null}
-          <img
-            src="../../../icons/colorful.png"
-            alt=""
-            // onClick={() => {
-            //   setShowBgs((prev) => !prev);
-            // }}
-          />
-          <i className="emoji_icon_large" 
-               onClick={() => {
-             setPicker((prev) => !prev);
-             }}
-          ></i>
-        </div>
-        <AddToYourPost setShowPrev={setShowPrev}/>
+          <>
+            <EmojiPickerBackgrounds user={user} setText={setText} text={text} />
+          </>
+        ) : (
+          <ImagePreview text={text}
+          user={user}
+          setText={setText}
+          showPrev={showPrev}
+          images={images}
+          setImages={setImages}
+          setShowPrev={setShowPrev}
+          setError={setError}  />
+        )}
+        <AddToYourPost setShowPrev={setShowPrev} />
+        <button className="post_submit">Post</button>
       </div>
     </div>
   );

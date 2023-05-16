@@ -14,7 +14,7 @@ const Home = () => {
   // const {user}=useSelector((state)=>state.user)
   // const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
 // const [data,setData]=useState(user2)
-  console.log("Home");
+  // console.log("Home");
   // console.log(user);
   // console.log(user2);
   //////////////////////////////////
@@ -27,23 +27,25 @@ const [visible,setVisible]=useState(true)
 const {user}=useSelector(state=>state.user)
 const cookie_user= Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
 const dispatch=useDispatch()
-console.log("home_visible");
-console.log(home_visible);
-console.log("USer");
-console.log(user);
-console.log("Cookie User");
-console.log(cookie_user);
+// console.log("home_visible");
+// console.log(home_visible);
+// console.log("USer");
+// console.log(user);
+// console.log("Cookie User");
+// console.log(cookie_user);
 
 
 
 const middle = useRef(null);
 const [height, setHeight] = useState();
-useEffect(() => {
-  setHeight(middle.current.clientHeight);
-}, [ height]);
+// useEffect(() => {
+//   setHeight(middle.current.clientHeight);
+// }, [ height]);
 
   return (
-    <div className="home" style={{ height: `${height + 150}px` }}>
+    <div className="home" 
+    // style={{ height: `${height + 150}px` }}
+    >
      <Header />
      <LeftHome user={user} /> 
      <RightHome user={user}/>

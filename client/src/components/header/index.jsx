@@ -32,10 +32,10 @@ const Header = () => {
   const user2 = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
   const dispatch = useDispatch();
   const color = "#65676b";
-  console.log("Header");
-  console.log("user");
-  console.log(user);
-  console.log(user2);
+  // console.log("Header");
+  // console.log("user");
+  // console.log(user);
+  // console.log(user2);
   const [showSearchMenu, setShowSearchMenu] = useState(false);
   const [showAllMenu, setShowAllMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);

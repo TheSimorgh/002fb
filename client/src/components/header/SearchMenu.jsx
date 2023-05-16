@@ -17,7 +17,7 @@ const SearchMenu = ({ color,setShowSearchMenu }) => {
   //   setVisibleIcon(false)
   // }
   console.log(visibleIcon);
-  useEffect(()=>{input.current.focus()},[])
+  useEffect(()=>{input.current.focus()},[input])
   return (
     <div className="header_left search_area scrollbar" ref={menu}>
       <div className="search_wrap">
