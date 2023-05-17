@@ -9,6 +9,8 @@ import ImagePreview from "./ImagePreview";
 import { createPost } from "../../functions/post";
 import PulseLoader from "react-spinners/PulseLoader";
 import PostError from "./PostError";
+import dataURItoBlob from "../../helpers/dataURItoBlog";
+import { uploadImages } from "../../functions/uploadImages";
 
 const CreatePostPopup = ({
   user,
@@ -29,18 +31,78 @@ const CreatePostPopup = ({
     setVisible(false);
   });
 
-  const postSubmit=async()=>{
-    setLoading(true)
-    const res= await createPost(  null,background,text,null,user,id,user.token)
-    setLoading(false); 
-  
-  
-  }
+  const postSubmit = async () => {
+    if (background) {
+      setLoading(true);
+      const res = await createPost(
+        null,
+        background,
+        text,
+        null,
+        user,
+        id,
+        user.token
+      );
+      setLoading(false);
+      if (res.status === "ok") {
+        setBackground("");
+        setText("");
+        setVisible(false);
+      } else {
+        setError(res);
+      }
+    } else if (images && images.length) {
+      setLoading(true);
+      const postImages = images.map((img) => {
+        return dataURItoBlob(img);
+      });
+      console.log(images);
+      console.log(postImages);
+      const path = `${user.username}/post_images`;
+      let formData = new FormData();
+      formData.append("path", path);
+      postImages.forEach((image) => {
+        formData.append("file", image);
+      });
+      const response = await uploadImages(formData, path, user.token);
+      console.log(response);
+      const res = await createPost(
+        null,
+        null,
+        text,
+        response,
+        user.id,
+        user.token
+      );
+      setLoading(false);
+      if (res.status === "ok") {
+        setBackground("");
+        setText("");
+        setImages("");
+        setVisible(false);
+      } else {
+        setError(res);
+      }
+    } else if (text) {
+      setLoading(true);
+      const res = await createPost(null, null, text, null, user.id, user.token);
+      setLoading(false);
+      if (res.status === "ok") {
+        setBackground("");
+        setText("");
+        setImages("");
+        setVisible(false);
+      } else {
+        setError(res);
+      }
+    } else {
+      console.log("nothing");
+    }
+  };
   return (
     <div className="blur">
       <div className="postBox" ref={popup}>
-      {error && <PostError error={error} setError={setError} />}
-
+        {error && <PostError error={error} setError={setError} />}
         <div className="box_header">
           <div
             className="small_circle"
@@ -67,22 +129,38 @@ const CreatePostPopup = ({
         </div>
         {!showPrev ? (
           <>
-            <EmojiPickerBackgrounds  setBackground={setBackground}background={background} user={user} setText={setText} text={text} />
+            <EmojiPickerBackgrounds
+              setBackground={setBackground}
+              background={background}
+              user={user}
+              setText={setText}
+              text={text}
+            />
           </>
         ) : (
-          <ImagePreview text={text}
-          user={user}
-          setText={setText}
-          showPrev={showPrev}
-          images={images}
-          setImages={setImages}
-          setShowPrev={setShowPrev}
-          setError={setError} 
-                     setBackground={setBackground}
-              background={background} />
+          <ImagePreview
+            text={text}
+            user={user}
+            setText={setText}
+            showPrev={showPrev}
+            images={images}
+            setImages={setImages}
+            setShowPrev={setShowPrev}
+            setError={setError}
+            setBackground={setBackground}
+            background={background}
+          />
         )}
         <AddToYourPost setShowPrev={setShowPrev} />
-        {loading ? <PulseLoader color="#fff" size={5} /> : "Post"}
+        <button
+          className="post_submit"
+          onClick={() => {
+            postSubmit();
+          }}
+          disabled={loading}
+        >
+          {loading ? <PulseLoader color="#fff" size={5} /> : "Post"}
+        </button>
       </div>
     </div>
   );
