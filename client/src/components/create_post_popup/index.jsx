@@ -39,8 +39,7 @@ const CreatePostPopup = ({
         background,
         text,
         null,
-        user,
-        id,
+        user.id,
         user.token
       );
       setLoading(false);
