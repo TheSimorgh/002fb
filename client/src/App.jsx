@@ -24,28 +24,21 @@ import { useState } from "react";
 </a> */
 }
 
-
-export const server_url="http://localhost:8000"
+export const server_url = "http://localhost:8000";
 function App() {
-  const {user}=useSelector(state=>state.user)
+  const { user } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
 
   const data = [
     // { path: "/login", element: <Login /> },
     { path: "/profile", element: <Profile /> },
     { path: "/", element: <Home setVisible={setVisible} visible={visible} /> },
-    { path: "/activate/:token", element: < Activate/> },
+    { path: "/activate/:token", element: <Activate /> },
   ];
-  
+
   return (
-    <div className={`"container mx-auto h-screen bg-dark` } >
-          {visible && (
-        <CreatePostPopup
-          user={user}
-          setVisible={setVisible}
-       
-        />
-      )}
+    <div className={`"container mx-auto h-screen bg-dark`}>
+      {visible && <CreatePostPopup user={user} setVisible={setVisible} />}
       <Routes>
         <Route element={<LoggedInRoutes />}>
           {data.map((e, i) => (
@@ -53,11 +46,10 @@ function App() {
           ))}
         </Route>
         <Route element={<NotLoggedInRoutes />}>
-           <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
         </Route>
-      <Route path="*" element={<NotFound/>} />
-      <Route path="/reset" element={<Reset/>} />
-
+        <Route path="*" element={<NotFound />} />
+        <Route path="/reset" element={<Reset />} />
       </Routes>
     </div>
   );

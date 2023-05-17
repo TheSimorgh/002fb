@@ -6,6 +6,10 @@ import useClickOutside from "../../helpers/clickOutside";
 import AddToYourPost from "./AddToYourPost";
 import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
 import ImagePreview from "./ImagePreview";
+import { createPost } from "../../functions/post";
+import PulseLoader from "react-spinners/PulseLoader";
+import PostError from "./PostError";
+
 const CreatePostPopup = ({
   user,
   setVisible,
@@ -25,9 +29,18 @@ const CreatePostPopup = ({
     setVisible(false);
   });
 
+  const postSubmit=async()=>{
+    setLoading(true)
+    const res= await createPost(  null,background,text,null,user,id,user.token)
+    setLoading(false); 
+  
+  
+  }
   return (
     <div className="blur">
       <div className="postBox" ref={popup}>
+      {error && <PostError error={error} setError={setError} />}
+
         <div className="box_header">
           <div
             className="small_circle"
@@ -69,7 +82,7 @@ const CreatePostPopup = ({
               background={background} />
         )}
         <AddToYourPost setShowPrev={setShowPrev} />
-        <button className="post_submit">Post</button>
+        {loading ? <PulseLoader color="#fff" size={5} /> : "Post"}
       </div>
     </div>
   );
