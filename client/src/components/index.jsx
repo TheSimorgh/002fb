@@ -25,6 +25,7 @@ export {default as RightHome} from "./home/right/index";
 export {default as Stories} from "./home/stories/index";
 export {default as SendVerification} from "./home/sendVerification/index";
 
+export {default as Post} from "./post/index";
 
 
 export {default as CreatePost} from "./create_post/index";
