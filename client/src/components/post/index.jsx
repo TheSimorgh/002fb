@@ -7,15 +7,23 @@ import { Dots, Public } from "../../svg";
 import ReactsPopup from "./ReactsPopup";
 import Moment from "react-moment";
 import CreateComment from "./CreateComment";
+import Comment from "./Comment";
+import PostMenu from "./PostMenu";
 
 const Post = ({ post, user }) => {
   const [reacts, setReacts] = useState();
   const [visible, setVisible] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
+  const [count, setCount] = useState(1);
   const total = 5;
   const comments = [1, 2, 35, 5, 7, 8];
+  const [checkSaved, setCheckSaved] = useState(true);
+  const postRef = useRef(null);
 
   const reactHandler = () => {};
+
+
   return (
     <div className="post">
       <div className="post_header">
@@ -46,7 +54,9 @@ const Post = ({ post, user }) => {
             </div>
           </div>
         </Link>
-        <div className="post_header_right hover1">
+        <div className="post_header_right hover1"
+           onClick={() => setShowMenu((prev) => !prev)}
+        >
           <Dots color="#828387" />
         </div>
       </div>
@@ -130,11 +140,32 @@ const Post = ({ post, user }) => {
       </div>
 
       <div className="comments_wrap" >
-        <div className="comments_order" >
-            <CreateComment user={user} />
-        </div>
+        <div className="comments_order" > </div>
+        <CreateComment user={user} />
 
+          {comments && 
+          
+          // comments.sort((a,b)=>{return new Date(b.commentAt)-new Date(a.commentAt)})
+          comments.slice(0, count).map((comment, i) =>
+           <Comment comment={comment} key={i} />)
+          
+          }
+        
       </div>
+      {showMenu && (
+        <PostMenu
+          userId={user.id}
+          postUserId={post.user._id}
+          imagesLength={post?.images?.length}
+          setShowMenu={setShowMenu}
+          postId={post._id}
+          token={user.token}
+          checkSaved={checkSaved}
+          setCheckSaved={setCheckSaved}
+          images={post.images}
+          postRef={postRef}
+        />
+      )}
     </div>
   );
 };
