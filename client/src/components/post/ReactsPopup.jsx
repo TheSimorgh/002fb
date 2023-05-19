@@ -1,36 +1,38 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
 const reactsArray = [
   {
     name: "like",
-    image: "../../../reacts/like.gif",
+    image: "../../../public/reacts/like.gif",
   },
   {
     name: "love",
-    image: "../../../reacts/love.gif",
+    image: "../../../public/reacts/love.gif",
   },
   {
     name: "haha",
-    image: "../../../reacts/haha.gif",
+    image: "../../../public/reacts/haha.gif",
   },
   {
     name: "wow",
-    image: "../../../reacts/wow.gif",
+    image: "../../../public/reacts/wow.gif",
   },
   {
     name: "sad",
-    image: "../../../reacts/sad.gif",
+    image: "../../../public/reacts/sad.gif",
   },
   {
     name: "angry",
-    image: "../../../reacts/angry.gif",
+    image: "../../../public/reacts/angry.gif",
   },
 ];
 
 export default function ReactsPopup({ visible, setVisible, reactHandler }) {
   return (
     <>
+    
       {visible && (
         <div
           className="reacts_popup"

@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import Moment from "react-moment";
+
 import { useEffect, useRef, useState } from "react";
 import { Dots, Public } from "../../svg";
 import ReactsPopup from "./ReactsPopup";
+import Moment from "react-moment";
+import CreateComment from "./CreateComment";
 
 const Post = ({ post, user }) => {
   const [reacts, setReacts] = useState();
@@ -13,8 +15,7 @@ const Post = ({ post, user }) => {
   const total = 5;
   const comments = [1, 2, 35, 5, 7, 8];
 
-
-  const reactHandler=()=>{}
+  const reactHandler = () => {};
   return (
     <div className="post">
       <div className="post_header">
@@ -74,7 +75,7 @@ const Post = ({ post, user }) => {
                   (react, i) =>
                     react.count > 0 && (
                       <img
-                        src={`../../../reacts/${react.react}.svg`}
+                        src={`/reacts/${react.react}.svg`}
                         alt=""
                         key={i}
                       />
@@ -90,7 +91,11 @@ const Post = ({ post, user }) => {
       </div>
 
       <div className="post_actions">
-        <ReactsPopup visible={visible} setVisible={setVisible} reactHandler={reactHandler} />
+        <ReactsPopup
+          visible={visible}
+          setVisible={setVisible}
+          reactHandler={reactHandler}
+        />
         <div
           className="post_action hover1"
           onMouseOver={() => {
@@ -103,11 +108,18 @@ const Post = ({ post, user }) => {
               setVisible(false);
             }, 500);
           }}
-          ></div>
-         <i className="like_icon"></i>
-          <span>Like</span>
-      </div>
-      <div className="post_action hover1">
+          // onClick={() => reactHandler(check ? check : "like")}
+        >
+
+    
+            <i className="like_icon"></i>
+        
+          <span
+          >
+           Like
+          </span>
+        </div>
+        <div className="post_action hover1">
           <i className="comment_icon"></i>
           <span>Comment</span>
         </div>
@@ -115,6 +127,14 @@ const Post = ({ post, user }) => {
           <i className="share_icon"></i>
           <span>Share</span>
         </div>
+      </div>
+
+      <div className="comments_wrap" >
+        <div className="comments_order" >
+            <CreateComment user={user} />
+        </div>
+
+      </div>
     </div>
   );
 };

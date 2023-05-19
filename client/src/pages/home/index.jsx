@@ -53,7 +53,7 @@ const Home = ({ setVisible, visible, posts }) => {
   const [height, setHeight] = useState();
   useEffect(() => {
     setHeight(middle.current.clientHeight);
-  }, [ height]);
+  }, [ ]);
 
   return (
     <div
