@@ -12,6 +12,7 @@ import { server_url } from "../../App";
 import { Header } from "../../components";
 import Cover from "./Cover";
 import ProfilePicInfo from "./ProfilePicInfo";
+import ProfileMenu from "./ProfileMenu";
 
 const Profile = () => {
   const { username } = useParams();
@@ -63,6 +64,7 @@ const Profile = () => {
           <div className="profile_container">
             <Cover cover={cover} />
             <ProfilePicInfo profile={profile}/>
+            <ProfileMenu />
           </div>
         </div>
         <div className="profile_bottom"></div>
