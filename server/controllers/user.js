@@ -227,3 +227,14 @@ exports.activateAccount = async (req, res) => {
     );
     return res.status(200).json({ message: "ok" });
   };
+
+  exports.getProfile=async (req,res)=>{
+    try {
+      const { username } = req.params;
+      const profile = await User.findOne({username}).select("-password");
+      res.json(user)
+      console.log(req.user);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }

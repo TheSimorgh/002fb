@@ -28,7 +28,7 @@ exports.imgUploadMidd=async(req,res,next)=>{
         // console.log(arr);
         // console.log(`//////////`);
         // console.log(arr.flat());
-        console.log(files[0].data);
+        // console.log(files[0].data);
           next();
 
       } catch (error) {
