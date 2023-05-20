@@ -24,7 +24,7 @@ import SearchMenu from "./SearchMenu";
 import AllMenu from "./AllMenu";
 import useClickOutside from "../../helpers/clickOutside";
 import UserMenu from "./user_menu";
-const Header = () => {
+const Header = ({page}) => {
   // const { user } = useSelector((user) => ({ ...user }));
   const { user } = useSelector((state) => state.user);
   // const { user } = useSelector((user) => ({...user}));
@@ -74,24 +74,22 @@ const Header = () => {
       <div className="header_middle">
         <Link
           to="/"
-          className={`middle_icon  active`}
+          className={`middle_icon ${page === "home" ? "active" : "hover1"}`}
+
           onClick={
             () => {}
             // getAllPosts()
           }
         >
-          {/* {page === "home" ? <HomeActive /> : <Home color={color} />} */}
-          <Home color={color} />
+           {page === "home" ? <HomeActive /> : <Home color={color} />} 
+
         </Link>
         <Link
           to="/friends"
-          className={`middle_icon 
-        
-          
-          `}
+          className={`middle_icon ${page === "friends" ? "active" : "hover1"}`}
         >
-          {/* {page === "friends" ? <FriendsActive /> : <Friends color={color} />} */}
-          <Friends color={color} />
+           {page === "friends" ? <FriendsActive /> : <Friends color={color} />}
+      
         </Link>
         <Link to="/" className="middle_icon hover1">
           <Watch color={color} />
@@ -105,13 +103,13 @@ const Header = () => {
         </Link>
       </div>
       <div className="header_right">
-        <Link
+      <Link
           to="/profile"
-          className={`profile_link hover1 
-              "active_link"
-              `}
+          className={`profile_link hover1 ${
+            page === "profile" ? "active_link" : ""
+          }`}
         >
-          <img src={user?.picture} alt="" />
+          <img src={user?.picture} alt={user?.username} />
           <span>{user?.first_name}</span>
         </Link>
         <div

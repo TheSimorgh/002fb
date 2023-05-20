@@ -9,6 +9,8 @@ import { HashLoader } from "react-spinners";
 import { useEffect, useReducer } from "react";
 import { profileReducer } from "../../functions/reducers";
 import { server_url } from "../../App";
+import { Header } from "../../components";
+import Cover from "./Cover";
 
 const Profile = () => {
   const { username } = useParams();
@@ -25,7 +27,7 @@ const Profile = () => {
     profile: {},
     error: "",
   });
-
+  const {cover}=profile
   useEffect(() => {
     getProfile();
   }, [userName]);
@@ -34,14 +36,14 @@ const Profile = () => {
       dispatch({
         type: "PROFILE_REQUEST",
       });
- 
+
       const { data } = await axios.get(`${server_url}/getProfile/${userName}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      if(data.ok===false){
-        navigate("/profile")
+      if (data.ok === false) {
+        navigate("/profile");
       }
       dispatch({ type: "PROFILE_SUCCESS", payload: data });
     } catch (error) {
@@ -53,15 +55,17 @@ const Profile = () => {
   }
   console.log(profile);
   return (
-<>
-<div>
-      Profile {userName} || {user.first_name}{" "}
-
-    </div>
-          <span>
-          || {JSON.stringify(profile,0,null)}
-         </span>
-</>
+    <>
+      <div className="profile">
+        <Header page={`profile`} />
+        <div className="profile_top">
+          <div className="profile_container">
+            <Cover cover={cover} />
+          </div>
+        </div>
+        <div className="profile_bottom"></div>
+      </div>
+    </>
   );
 };
 

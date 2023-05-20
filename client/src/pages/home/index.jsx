@@ -60,7 +60,7 @@ const Home = ({ setVisible, visible, posts }) => {
       className="home"
        style={{ height: `${height + 150}px` }}
     >
-      <Header />
+      <Header page="home"/>
       <LeftHome user={user} />
       <RightHome user={user} />
       <div className="home_middle" ref={middle}>
