@@ -13,6 +13,7 @@ import { Header } from "../../components";
 import Cover from "./Cover";
 import ProfilePicInfo from "./ProfilePicInfo";
 import ProfileMenu from "./ProfileMenu";
+import PlpUMayKnow from "./PlpUMayKnow";
 
 const Profile = () => {
   const { username } = useParams();
@@ -67,7 +68,14 @@ const Profile = () => {
             <ProfileMenu />
           </div>
         </div>
-        <div className="profile_bottom"></div>
+        <div className="profile_bottom">
+        <div className="profile_container">
+        <div className="bottom_container">
+        <PlpUMayKnow />
+        </div>
+        </div>
+      
+        </div>
       </div>
     </>
   );
