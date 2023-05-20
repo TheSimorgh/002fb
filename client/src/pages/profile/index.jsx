@@ -11,6 +11,7 @@ import { profileReducer } from "../../functions/reducers";
 import { server_url } from "../../App";
 import { Header } from "../../components";
 import Cover from "./Cover";
+import ProfilePicInfo from "./ProfilePicInfo";
 
 const Profile = () => {
   const { username } = useParams();
@@ -61,6 +62,7 @@ const Profile = () => {
         <div className="profile_top">
           <div className="profile_container">
             <Cover cover={cover} />
+            <ProfilePicInfo profile={profile}/>
           </div>
         </div>
         <div className="profile_bottom"></div>
