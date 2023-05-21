@@ -55,8 +55,8 @@ console.log(posts);
   }
   const data = [
     // { path: "/login", element: <Login /> },
-    { path: "/profile", element: <Profile /> },
-    { path: "/profile/:username", element: <Profile /> },
+    { path: "/profile", element: <Profile  setVisible={setVisible} /> },
+    { path: "/profile/:username", element: <Profile  setVisible={setVisible}/> }, 
     { path: "/", element: <Home setVisible={setVisible} visible={visible} posts={posts} /> },
     { path: "/activate/:token", element: <Activate /> },
   ];

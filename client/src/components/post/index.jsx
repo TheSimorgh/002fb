@@ -54,8 +54,9 @@ const Post = ({ post, user }) => {
             </div>
           </div>
         </Link>
-        <div className="post_header_right hover1"
-           onClick={() => setShowMenu((prev) => !prev)}
+        <div
+          className="post_header_right hover1"
+          onClick={() => setShowMenu((prev) => !prev)}
         >
           <Dots color="#828387" />
         </div>
@@ -66,9 +67,7 @@ const Post = ({ post, user }) => {
           style={{ backgroundImage: `url(${post?.background})` }}
         >
           <div className="post_bg_text">{post?.text}</div>
-          
         </div>
-        
       ) : (
         <>
           <div className="post_text">{post.text}</div>
@@ -98,7 +97,7 @@ const Post = ({ post, user }) => {
           )}
         </>
       )}
-      
+
       <div className="post_infos">
         <div className="reacts_count">
           <div className="reacts_count_imgs">
@@ -111,15 +110,11 @@ const Post = ({ post, user }) => {
                 .map(
                   (react, i) =>
                     react.count > 0 && (
-                      <img
-                        src={`/reacts/${react.react}.svg`}
-                        alt=""
-                        key={i}
-                      />
+                      <img src={`/reacts/${react.react}.svg`} alt="" key={i} />
                     )
                 )}
           </div>
-          
+
           <div className="reacts_count_num">{total > 0 && total}</div>
         </div>
         <div className="to_right">
@@ -148,14 +143,9 @@ const Post = ({ post, user }) => {
           }}
           // onClick={() => reactHandler(check ? check : "like")}
         >
+          <i className="like_icon"></i>
 
-    
-            <i className="like_icon"></i>
-        
-          <span
-          >
-           Like
-          </span>
+          <span>Like</span>
         </div>
         <div className="post_action hover1">
           <i className="comment_icon"></i>
@@ -167,18 +157,15 @@ const Post = ({ post, user }) => {
         </div>
       </div>
 
-      <div className="comments_wrap" >
-        <div className="comments_order" > </div>
+      <div className="comments_wrap">
+        <div className="comments_order"> </div>
         <CreateComment user={user} />
 
-          {comments && 
-          
+        {comments &&
           // comments.sort((a,b)=>{return new Date(b.commentAt)-new Date(a.commentAt)})
-          comments.slice(0, count).map((comment, i) =>
-           <Comment comment={comment} key={i} />)
-          
-          }
-        
+          comments
+            .slice(0, count)
+            .map((comment, i) => <Comment comment={comment} key={i} />)}
       </div>
       {showMenu && (
         <PostMenu

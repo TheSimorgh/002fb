@@ -9,13 +9,14 @@ import { HashLoader } from "react-spinners";
 import { useEffect, useReducer } from "react";
 import { profileReducer } from "../../functions/reducers";
 import { server_url } from "../../App";
-import { Header } from "../../components";
+import { CreatePost, Header } from "../../components";
 import Cover from "./Cover";
 import ProfilePicInfo from "./ProfilePicInfo";
 import ProfileMenu from "./ProfileMenu";
 import PlpUMayKnow from "./PlpUMayKnow";
+import GridPosts from "./GridPosts";
 
-const Profile = () => {
+const Profile = ({setVisible}) => {
   const { username } = useParams();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
@@ -30,7 +31,7 @@ const Profile = () => {
     profile: {},
     error: "",
   });
-  const {cover}=profile
+  const { cover } = profile;
   useEffect(() => {
     getProfile();
   }, [userName]);
@@ -64,17 +65,24 @@ const Profile = () => {
         <div className="profile_top">
           <div className="profile_container">
             <Cover cover={cover} />
-            <ProfilePicInfo profile={profile}/>
+            <ProfilePicInfo profile={profile} />
             <ProfileMenu />
           </div>
         </div>
         <div className="profile_bottom">
-        <div className="profile_container">
-        <div className="bottom_container">
-        <PlpUMayKnow />
-        </div>
-        </div>
-      
+          <div className="profile_container">
+            <div className="bottom_container">
+              <PlpUMayKnow />
+              <div className="profile_grid" >
+                <div className="profile_left" ></div>
+                <div className="profile_right" >
+                  <CreatePost user={user} profile={profile} setVisible={setVisible} />
+                  <GridPosts />
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
