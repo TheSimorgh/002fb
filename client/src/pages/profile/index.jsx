@@ -9,7 +9,7 @@ import { HashLoader } from "react-spinners";
 import { useEffect, useReducer } from "react";
 import { profileReducer } from "../../functions/reducers";
 import { server_url } from "../../App";
-import { CreatePost, Header } from "../../components";
+import { CreatePost, Header, Post } from "../../components";
 import Cover from "./Cover";
 import ProfilePicInfo from "./ProfilePicInfo";
 import ProfileMenu from "./ProfileMenu";
@@ -58,13 +58,15 @@ const Profile = ({setVisible}) => {
     }
   }
   console.log(profile);
+  console.log(profile);
+  console.log(cover);
   return (
     <>
       <div className="profile">
         <Header page={`profile`} />
         <div className="profile_top">
           <div className="profile_container">
-            <Cover cover={cover} />
+            <Cover cover={profile?.cover} />
             <ProfilePicInfo profile={profile} />
             <ProfileMenu />
           </div>
@@ -78,6 +80,15 @@ const Profile = ({setVisible}) => {
                 <div className="profile_right" >
                   <CreatePost user={user} profile={profile} setVisible={setVisible} />
                   <GridPosts />
+                  <div className="posts">
+                    {profile.posts && profile.posts.length ? (
+                      profile.posts.map((post) => (
+                        <Post post={post} user={user} key={post._id} profile />
+                      ))
+                    ) : (
+                      <div className="no_posts">No posts available</div>
+                    )}
+                  </div>
                 </div>
 
               </div>
