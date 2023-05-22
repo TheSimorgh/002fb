@@ -1,4 +1,4 @@
-const ProfilePicInfo = ({ profile }) => {
+const ProfilePicInfo = ({ profile, visitor }) => {
   return (
     <div className="profile_img_wrap">
       <div className="profile_w_left">
@@ -22,7 +22,7 @@ const ProfilePicInfo = ({ profile }) => {
           <div className="profile_friend_count">
             {profile?.friends && (
               <div className="profile_card_count">
-                {profile?.friends.length === 0
+                {profile?.friends?.length === 0
                   ? ""
                   : profile?.friends?.length === 1
                   ? "1 Friend"
@@ -32,16 +32,17 @@ const ProfilePicInfo = ({ profile }) => {
           </div>
         </div>
       </div>
-      <div className="profile_w_right">
-          <div className="blue_btn">
-            <img src="/icons/plus.png" alt="" className="invert" />
-            <span>Add to story</span>
-          </div>
-          <div className="gray_btn">
-            <i className="edit_icon"></i>
-            <span>Edit profile</span>
-          </div>
-        </div>
+                {visitor ? (null):
+                (  <div className="profile_w_right">
+                <div className="blue_btn">
+                  <img src="/icons/plus.png" alt="" className="invert" />
+                  <span>Add to story</span>
+                </div>
+                <div className="gray_btn">
+                  <i className="edit_icon"></i>
+                  <span>Edit profile</span>
+                </div>
+              </div>)}
     </div>
   );
 };

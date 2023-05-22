@@ -16,12 +16,14 @@ import ProfileMenu from "./ProfileMenu";
 import PlpUMayKnow from "./PlpUMayKnow";
 import GridPosts from "./GridPosts";
 
-const Profile = ({setVisible}) => {
+const Profile = ({ setVisible }) => {
   const { username } = useParams();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
   var userName = username === undefined ? user?.username : username;
+  var visitor = userName === user.username ? false : true;
+
   console.log(user);
   console.log(username);
   console.log(userName);
@@ -57,17 +59,20 @@ const Profile = ({setVisible}) => {
       });
     }
   }
-  console.log(profile);
+  console.log("profile");
   console.log(profile);
   console.log(cover);
+  console.log("visitor");
+  console.log(visitor);
+
   return (
     <>
       <div className="profile">
         <Header page={`profile`} />
         <div className="profile_top">
           <div className="profile_container">
-            <Cover cover={profile?.cover} />
-            <ProfilePicInfo profile={profile} />
+            <Cover cover={profile?.cover} visitor={visitor} />
+            <ProfilePicInfo profile={profile} visitor={visitor} />
             <ProfileMenu />
           </div>
         </div>
@@ -75,10 +80,17 @@ const Profile = ({setVisible}) => {
           <div className="profile_container">
             <div className="bottom_container">
               <PlpUMayKnow />
-              <div className="profile_grid" >
-                <div className="profile_left" ></div>
-                <div className="profile_right" >
-                  <CreatePost user={user} profile={profile} setVisible={setVisible} />
+              <div className="profile_grid">
+                <div className="profile_left"></div>
+                <div className="profile_right">
+                  {!visitor ? (
+                    <CreatePost
+                      user={user}
+                      profile={profile}
+                      setVisible={setVisible}
+                    />
+                  ) : null}
+
                   <GridPosts />
                   <div className="posts">
                     {profile.posts && profile.posts.length ? (
@@ -90,7 +102,6 @@ const Profile = ({setVisible}) => {
                     )}
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
