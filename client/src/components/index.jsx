@@ -31,3 +31,4 @@ export {default as Post} from "./post/index";
 export {default as CreatePost} from "./create_post/index";
 
 
+export {default as ProfilePicture} from "./profile_picture/index";

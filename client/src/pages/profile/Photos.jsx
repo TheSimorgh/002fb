@@ -29,7 +29,7 @@ const Photos = ({ username, token }) => {
         type: "PHOTOS_REQUEST",
       });
 
-      const { data } = await axios.post(`${server_url}/listImages}`,
+      const { data } = await axios.post(`${server_url}/listImages`,
       {path,sort,max},
        {
         headers: {

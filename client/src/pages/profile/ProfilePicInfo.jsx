@@ -1,6 +1,11 @@
+import { useState } from "react";
+import { ProfilePicture } from "../../components";
+
 const ProfilePicInfo = ({ profile, visitor }) => {
+  const [show,setShow]=useState(true)
   return (
     <div className="profile_img_wrap">
+      {show ? (<ProfilePicture setShow={setShow} show={show} />):(null)}
       <div className="profile_w_left">
         <div className="profile_w_img">
           <div

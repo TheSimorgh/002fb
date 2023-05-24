@@ -21,11 +21,11 @@ const Friends = ({ friends }) => {
       </div>
       {friends && (
         <div className="profile_card_count">
-          {friends.length === 0
+          {friends?.length === 0 || !friends?.length
             ? ""
-            : friends.length === 1
+            : friends?.length === 1
             ? "1 Friend"
-            : `${friends.length} Friends`}
+            : `${friends?.length} Friends`}
         </div>
       )}
       <div className="profile_card_grid">
