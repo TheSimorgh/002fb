@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import useClickOutside from "../../helpers/clickOutside";
 
-const Cover = ({ cover }) => {
+const Cover = ({ cover,visitor }) => {
     const [showCoverMneu, setShowCoverMenu] = useState(false);
 
     const { user } = useSelector((state) =>state.user);
