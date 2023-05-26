@@ -1,5 +1,6 @@
 const {   validateEmail,validateLength,validateUsername,} = require("../helpers/validation");
 const User = require("../models/User");
+const Post = require("../models/Post");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/token");
@@ -127,14 +128,6 @@ exports.activateAccount = async (req, res) => {
   }
 
 
-  exports.auth=async (req,res)=>{
-    try {
-      console.log(`auth`);
-      console.log(req.user);
-    } catch (error) {
-      
-    }
-  }
 
   exports.sendVerification=async (req,res)=>{
     try {
@@ -235,9 +228,48 @@ exports.activateAccount = async (req, res) => {
       if (!profile) {
         return res.json({ ok: false });
       }
-      res.json(profile)
+      const posts = await Post.find({user:profile._id}).populate("user")
+      res.json({...profile.toObject(), posts,})
       console.log(req.user);
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  }
+
+
+
+  
+  exports.updateProfilePicture = async (req, res) => {
+    try {
+      const { url } = req.body;
+  
+      await User.findByIdAndUpdate(req.user.id, {
+        picture: url,
+      });
+      res.json(url);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  exports.updateCover = async (req, res) => {
+    try {
+      const { url } = req.body;
+  
+      await User.findByIdAndUpdate(req.user.id, {
+        cover: url,
+      });
+      res.json(url);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  exports.auth=async (req,res)=>{
+    try {
+      console.log(`auth`);
+      console.log(req.user);
+    } catch (error) {
+      
     }
   }

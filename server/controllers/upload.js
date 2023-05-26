@@ -67,6 +67,7 @@ exports.listImages = async (req, res) => {
     .execute()
     .then((result) => {
       res.json(result);
+      console.log(result)
     })
     .catch((err) => {
       console.log(err.error.message);

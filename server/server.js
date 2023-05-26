@@ -29,13 +29,21 @@ const app = express();
 
 // }
 
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, true);
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Access-Control-Allow-Origin", "Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
+  credentials: true
+};
 // Middleware
 
 app.use(express.json());
 //app.use(cors(options));
- app.use(cors());
+ app.use(cors(corsOptions));
  app.use(express.json());
- app.use(express.urlencoded({extended: false}));
+ app.use(express.urlencoded({extended: true}));
 app.use(
   fileUpload({
     useTempFiles: true,
