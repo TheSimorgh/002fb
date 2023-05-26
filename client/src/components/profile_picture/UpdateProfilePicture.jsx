@@ -1,9 +1,59 @@
-import { useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useCallback, useRef, useState } from "react";
+import Cropper from "react-easy-crop";
+import { useDispatch, useSelector } from "react-redux";
+import getCroppedImg from "../../helpers/getCroppedImg";
 
 const UpdateProfilePicture = ({setShow,image,setImage}) => {
+    const dispatch = useDispatch();
     const [description, setDescription] = useState("");
-
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const { user } = useSelector((state) => (state.user));
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const slider = useRef(null);
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
   
+
+    const zoomOut=()=>{
+        slider.current.stepDown();
+        setZoom(slider.current.value);
+    }
+    const zoomIn=()=>{
+        slider.current.stepUp();
+        setZoom(slider.current.value);
+   
+    }
+
+    const getCroppedImage = useCallback(
+        async (show) => {
+          try {
+            const img = await getCroppedImg(image, croppedAreaPixels);
+            if (show) {
+              setZoom(1);
+              setCrop({ x: 0, y: 0 });
+              setImage(img);
+            } else {
+              return img;
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        [croppedAreaPixels]
+      );
+      const updateProfielPicture = async () => {
+
+        try {
+          setLoading(true);
+        } catch (error) {
+          setLoading(false);
+          setError(error.response.data.message);
+        }
+      }
     return (
     <div className="postBox update_img">
       <div className="box_header">
@@ -21,9 +71,23 @@ const UpdateProfilePicture = ({setShow,image,setImage}) => {
         ></textarea>
       </div>
       <div className="update_center">
-        <div className="crooper"></div>
+        <div className="crooper">
+     
+          <Cropper
+            image={image}
+            crop={crop}
+            zoom={zoom}
+            aspect={1 / 1}
+            cropShape="round"
+            onCropChange={setCrop}
+            onCropComplete={onCropComplete}
+            onZoomChange={setZoom}
+            showGrid={false}
+          />
+      
+        </div>
         <div className="slider">
-          <div className="slider_circle hover1" onClick={() => {}}>
+          <div className="slider_circle hover1" onClick={() => zoomOut()}>
             <i className="minus_icon"></i>
           </div>
           <input
@@ -31,18 +95,18 @@ const UpdateProfilePicture = ({setShow,image,setImage}) => {
             min={1}
             max={3}
             step={0.2}
-            // ref={slider}
-            // value={zoom}
-            // onChange={(e) => setZoom(e.target.value)}
+             ref={slider}
+             value={zoom}
+            onChange={(e) => setZoom(e.target.value)}
           />
-          <div className="slider_circle hover1" onClick={() =>{}}>
+          <div className="slider_circle hover1" onClick={() => zoomIn()}>
             <i className="plus_icon"></i>
           </div>
         </div>
       </div>
 
       <div className="flex_up">
-        <div className="gray_btn" onClick={() => {}}>
+        <div className="gray_btn" onClick={() => getCroppedImage("show")}>
           <i className="crop_icon"></i>Crop photo
         </div>
         <div className="gray_btn">

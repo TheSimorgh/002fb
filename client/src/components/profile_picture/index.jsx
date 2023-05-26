@@ -83,6 +83,7 @@ const ProfilePicture = ({ setShow,show }) => {
           setImage={setImage}
           image={image}
           setShow={setShow}
+          setError={setError}
         //   setError={setError}
         //   pRef={pRef}
         />
