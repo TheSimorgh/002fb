@@ -3,35 +3,37 @@ import "./style.css";
 import useClickOutside from "../../helpers/clickOutside";
 import { useSelector } from "react-redux";
 import UpdateProfilePicture from "./UpdateProfilePicture";
-const ProfilePicture = ({ setShow,show }) => {
+
+
+const ProfilePicture = ({ setShow,show,pRef }) => {
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
   const refInput = useRef(null);
   const popup = useRef(null);
   const { user } = useSelector((state) => state.user);
-  useClickOutside(popup,setShow(true))
+  // useClickOutside(popup,()=>setShow(false))
     useEffect(()=>{},[show])
-  const handleImage = (e) => {
-    console.log("handleImage");
-    let file = e.target.files[0];
-    if (
-      file.type !== "image/jpeg" &&
-      file.type !== "image/png" &&
-      file.type !== "image/webp" &&
-      file.type !== "image/gif"
-    ) {
-      setError(`${file.name} format is not supported.`);
-      return;
-    } else if (file.size > 1024 * 1024 * 5) {
-      setError(`${file.name} is too large max 5mb allowed.`);
-      return;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (event) => {
-      setImage(event.target.result);
+    const handleImage = (e) => {
+      let file = e.target.files[0];
+      if (
+        file.type !== "image/jpeg" &&
+        file.type !== "image/png" &&
+        file.type !== "image/webp" &&
+        file.type !== "image/gif"
+      ) {
+        setError(`${file.name} format is not supported.`);
+        return;
+      } else if (file.size > 1024 * 1024 * 5) {
+        setError(`${file.name} is too large max 5mb allowed.`);
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        setImage(event.target.result);
+      };
     };
-  };
   return (
     <div className="blur" >
       <input
@@ -84,8 +86,8 @@ const ProfilePicture = ({ setShow,show }) => {
           image={image}
           setShow={setShow}
           setError={setError}
-        //   setError={setError}
-        //   pRef={pRef}
+  
+           pRef={pRef}
         />
       )}
     </div>

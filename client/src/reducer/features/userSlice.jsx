@@ -185,6 +185,9 @@ const userSlice = createSlice({
     truly(state) {
       state.isSuccess = !state.isSuccess;
     },
+    updatePicture(state,action) {
+      state.user.picture = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -278,5 +281,5 @@ const userSlice = createSlice({
   // }
 });
 
-export const { logout, truly, setUser2,reset,loadingTruly,user_verification,activate } = userSlice.actions;
+export const { logout, truly, setUser2,reset,loadingTruly,user_verification,activate,updatePicture } = userSlice.actions;
 export default userSlice.reducer;

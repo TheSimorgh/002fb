@@ -1,53 +1,79 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ProfilePicture } from "../../components";
 
 const ProfilePicInfo = ({ profile, visitor }) => {
-  const [show,setShow]=useState(true)
+  const [show, setShow] = useState(false);
+  const pRef = useRef(null);
+  const   othername ="sss"
   return (
     <div className="profile_img_wrap">
-      {show ? (<ProfilePicture setShow={setShow} show={show} />):(null)}
+      {show && <ProfilePicture setShow={setShow} pRef={pRef} />}
       <div className="profile_w_left">
         <div className="profile_w_img">
           <div
             className="profile_w_bg"
+            ref={pRef}
             style={{
               backgroundSize: "cover",
-              backgroundImage: `url(${profile?.picture})`,
+              backgroundImage: `url(${profile.picture})`,
             }}
           ></div>
-          <div className="profile_circle hover1">
-            <i className="camera_filled_icon"></i>
-          </div>
+          {!visitor && (
+            <div
+              className="profile_circle hover1"
+              onClick={() => setShow(true)}
+            >
+              <i className="camera_filled_icon"></i>
+            </div>
+          )}
         </div>
         <div className="profile_w_col">
           <div className="profile_name">
-            {profile?.first_name} {profile?.last_name}
-            <div className="othername">othername</div>
+            {profile.first_name} {profile.last_name}
+            <div className="othername">{othername && `(${othername})`}</div>
           </div>
           <div className="profile_friend_count">
             {profile?.friends && (
               <div className="profile_card_count">
-                {profile?.friends?.length === 0
+                {profile?.friends.length === 0
                   ? ""
-                  : profile?.friends?.length === 1
+                  : profile?.friends.length === 1
                   ? "1 Friend"
-                  : `${profile?.friends?.length} Friends`}
+                  : `${profile?.friends.length} Friends`}
               </div>
             )}
           </div>
+          <div className="profile_friend_imgs">
+            {profile?.friends &&
+              profile.friends.slice(0, 6).map((friend, i) => (
+                <Link to={`/profile/${friend.username}`} key={i}>
+                  <img
+                    src={friend.picture}
+                    alt=""
+                    style={{
+                      transform: `translateX(${-i * 7}px)`,
+                      zIndex: `${i}`,
+                    }}
+                  />
+                </Link>
+              ))}
+          </div>
         </div>
       </div>
-                {visitor ? (null):
-                (  <div className="profile_w_right">
-                <div className="blue_btn">
-                  <img src="/icons/plus.png" alt="" className="invert" />
-                  <span>Add to story</span>
-                </div>
-                <div className="gray_btn">
-                  <i className="edit_icon"></i>
-                  <span>Edit profile</span>
-                </div>
-              </div>)}
+      {visitor ? (
+        <Friendship friendshipp={profile?.friendship} profileid={profile._id} />
+      ) : (
+        <div className="profile_w_right">
+          <div className="blue_btn">
+            <img src="../../../icons/plus.png" alt="" className="invert" />
+            <span>Add to story</span>
+          </div>
+          <div className="gray_btn">
+            <i className="edit_icon"></i>
+            <span>Edit profile</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
