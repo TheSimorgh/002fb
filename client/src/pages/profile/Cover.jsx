@@ -9,8 +9,9 @@ import { uploadImages } from "../../functions/uploadImages";
 import { updateCover } from "../../functions/user";
 import { createPost } from "../../functions/post";
 import { useSelector } from "react-redux";
+import OldCovers from "./OldCovers";
 
-const Cover = ({ cover, visitor }) => {
+const Cover = ({ cover, visitor,photos }) => {
   const [showCoverMneu, setShowCoverMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -200,6 +201,13 @@ const Cover = ({ cover, visitor }) => {
             </div>
           )}
         </div>
+      )}
+       {show && (
+        <OldCovers
+          photos={photos}
+          setCoverPicture={setCoverPicture}
+          setShow={setShow}
+        />
       )}
     </div>
   );

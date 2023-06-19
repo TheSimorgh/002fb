@@ -32,6 +32,8 @@ const Profile = ({ getAllPosts, setVisible }) => {
   });
   const visitor = userName === user.username ? false : true;
   console.log(`Visitor: ${visitor}`);
+  console.log(`Photos: ${photos}`);
+  console.log(photos);
   const path = `${userName}/*`;
   const max = 30;
   const sort = "desc";
@@ -86,7 +88,7 @@ const Profile = ({ getAllPosts, setVisible }) => {
       <Header page="profile" getAllPosts={getAllPosts} />
       <div className="profile_top">
         <div className="profile_container">
-          <Cover cover={profile.cover} profile={profile} />
+          <Cover cover={profile.cover} profile={profile} photos={photos.resources} />
           <ProfilePicturesInfos
             profile={profile}
             loading={loading}
