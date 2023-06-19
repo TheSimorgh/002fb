@@ -1,41 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useReducer, useRef, useState } from "react";
 import "./style.css";
+import UpdateProfilePicture from "./UpdateProfilePicture";
 import useClickOutside from "../../helpers/clickOutside";
 import { useSelector } from "react-redux";
-import UpdateProfilePicture from "./UpdateProfilePicture";
 
+const ProfilePicture = ({ setShow,pRef,photos }) => {
+  const refInput = useRef(null);
+  const { user } = useSelector((state) => state.user);
 
-const ProfilePicture = ({ setShow,show,pRef }) => {
+  const popup = useRef(null);
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
-  const refInput = useRef(null);
-  const popup = useRef(null);
-  const { user } = useSelector((state) => state.user);
   // useClickOutside(popup,()=>setShow(false))
-    useEffect(()=>{},[show])
-    const handleImage = (e) => {
-      let file = e.target.files[0];
-      if (
-        file.type !== "image/jpeg" &&
-        file.type !== "image/png" &&
-        file.type !== "image/webp" &&
-        file.type !== "image/gif"
-      ) {
-        setError(`${file.name} format is not supported.`);
-        return;
-      } else if (file.size > 1024 * 1024 * 5) {
-        setError(`${file.name} is too large max 5mb allowed.`);
-        return;
-      }
-  
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        setImage(event.target.result);
-      };
+  const handleImage = (e) => {
+    let file = e.target.files[0];
+    if (
+      file.type !== "image/jpeg" &&
+      file.type !== "image/png" &&
+      file.type !== "image/webp" &&
+      file.type !== "image/gif"
+    ) {
+      setError(`${file.name} format is not supported.`);
+      return;
+    } else if (file.size > 1024 * 1024 * 5) {
+      setError(`${file.name} is too large max 5mb allowed.`);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      setImage(event.target.result);
     };
+  };
   return (
-    <div className="blur" >
+    <div className="blur">
       <input
         type="file"
         ref={refInput}
@@ -65,6 +65,7 @@ const ProfilePicture = ({ setShow,show,pRef }) => {
             </button>
           </div>
         </div>
+
         {error && (
           <div className="postError comment_error">
             <div className="postError_error">{error}</div>
@@ -73,23 +74,48 @@ const ProfilePicture = ({ setShow,show,pRef }) => {
             </button>
           </div>
         )}
-        <div className="old_pictures_wrap scrollbar">
+              <div className="old_pictures_wrap scrollbar">
           <h4>your profile pictures</h4>
-          <div className="old_pictures"></div>
+          <div className="old_pictures">
+            {photos
+              .filter(
+                (img) => img.folder === `${user.username}/profile_pictures`
+              )
+              .map((photo) => (
+                <img
+                  src={photo.secure_url}
+                  key={photo.public_id}
+                  alt=""
+                  onClick={() => setImage(photo.secure_url)}
+                />
+              ))}
+          </div>
           <h4>other pictures</h4>
-          <div className="old_pictures"></div>
+          <div className="old_pictures">
+            {photos
+              .filter(
+                (img) => img.folder !== `${user.username}/profile_pictures`
+              )
+              .map((photo) => (
+                <img
+                  src={photo.secure_url}
+                  key={photo.public_id}
+                  alt=""
+                  onClick={() => setImage(photo.secure_url)}
+                />
+              ))}
+          </div>
         </div>
       </div>
-      {image && (
+      {image && image?.length ? (
         <UpdateProfilePicture
           setImage={setImage}
           image={image}
           setShow={setShow}
           setError={setError}
-  
-           pRef={pRef}
+          pRef={pRef}
         />
-      )}
+      ) :null}
     </div>
   );
 };

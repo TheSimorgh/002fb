@@ -40,8 +40,10 @@ const Friends = ({ friends }) => {
               <span>
                 {friend.first_name} {friend.last_name}
               </span>
+            
             </Link>
           ))}
+          
       </div>
     </div>
   );

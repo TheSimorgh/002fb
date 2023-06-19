@@ -64,6 +64,7 @@ const CreatePostPopup = ({
         formData.append("file", image);
       });
       const response = await uploadImages(formData, path, user.token);
+      console.log("uploadImages");
       console.log(response);
       const res = await createPost(
         null,

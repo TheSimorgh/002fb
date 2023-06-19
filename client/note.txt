@@ -1,4 +1,14 @@
 https://www.freecodecamp.org/news/how-to-install-tailwindcss-in-react/
 
 react-responsive
+
+
+updateProfielPicture
 https://medium.com/geekculture/redux-persist-redux-toolkit-implementation-made-easy-for-react-native-and-react-js-831ee1e3f22b
+
+
+Cookies.set("user",JSON.stringify({...user,picture:res[0].url}))
+dispatch(updatePicture(res[0].url))
+updatePicture(state,action) {
+  state.user.picture = action.payload;
+},

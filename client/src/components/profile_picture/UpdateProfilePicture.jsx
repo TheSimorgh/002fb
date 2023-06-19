@@ -1,33 +1,34 @@
-import { useCallback, useRef, useState } from "react";
-import Cropper from "react-easy-crop";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import getCroppedImg from "../../helpers/getCroppedImg";
-import { PulseLoader } from "react-spinners";
+import PulseLoader from "react-spinners/PulseLoader";
+import Cookies from "js-cookie";
+import { createPost } from "../../functions/post";
 import { uploadImages } from "../../functions/uploadImages";
 import { updateprofilePicture } from "../../functions/user";
-import { createPost } from "../../functions/post";
-import Cookies from "js-cookie";
+import getCroppedImg from "../../helpers/getCroppedImg";
+import Cropper from "react-easy-crop";
 import { updatePicture } from "../../reducer/features/userSlice";
 
-const UpdateProfilePicture = ({ setShow, image, setImage, setError,pRef }) => {
+const UpdateProfilePicture = ({ setImage, image, setError, setShow, pRef }) => {
   const dispatch = useDispatch();
   const [description, setDescription] = useState("");
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const { user } = useSelector((state) => state.user);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const slider = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const { user } = useSelector((state) => state.user);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
-
-  const zoomOut = () => {
-    slider.current.stepDown();
-    setZoom(slider.current.value);
-  };
   const zoomIn = () => {
     slider.current.stepUp();
+    setZoom(slider.current.value);
+  };
+  const zoomOut = () => {
+    slider.current.stepDown();
     setZoom(slider.current.value);
   };
 
@@ -35,12 +36,16 @@ const UpdateProfilePicture = ({ setShow, image, setImage, setError,pRef }) => {
     async (show) => {
       try {
         const img = await getCroppedImg(image, croppedAreaPixels);
-        console.log(img);
         if (show) {
           setZoom(1);
           setCrop({ x: 0, y: 0 });
           setImage(img);
+          console.log(" show in getCroppedImage");
+          console.log(img);
+
         } else {
+          console.log("not show in getCroppedImage");
+          console.log(img);
           return img;
         }
       } catch (error) {
@@ -49,7 +54,61 @@ const UpdateProfilePicture = ({ setShow, image, setImage, setError,pRef }) => {
     },
     [croppedAreaPixels]
   );
-  const updateProfielPicture = async () => {
+  // const updateProfielPicture = async () => {
+  //   try {
+  //     setLoading(true);
+
+  //     const image = await getCroppedImage()
+  //     const blob = await fetch(image).then()
+  //     const path = `${user.username}/profile_pictures`;
+  //     let formData = new FormData();
+  //     formData.append("file", blob);
+  //     formData.append("path", path);
+  //     const res = await uploadImages(formData, path, user.token);
+
+  //     const updated_picture = await updateprofilePicture(
+  //       res[0].url,
+  //       user.token
+  //     );
+   
+  //     if(updated_picture==="ok"){
+  //      const new_post= await createPost("profilePicture",null,description,res,user.id,user.token)
+  //       if(new_post==="ok"){
+  //         setLoading(false);
+  //         setImage("");
+  //         // Cookies.set(
+  //         //   "user",
+  //         //   JSON.stringify({
+  //         //     ...user,
+  //         //     picture: res[0].url,
+  //         //   })
+  //         // );
+  //         dispatch(updatePicture(res[0].url))
+  //       }else{
+
+  //         setTimeout(()=>{   setLoading(false);},1000)
+  //         setError(new_post)        }
+  //     }else{
+  //       setTimeout(()=>{   setLoading(false);},1000)
+  //       setError(updated_picture)
+  //     }
+  //     console.log("updateProfielPicture");
+  //     console.log(res)
+  //     //console.log(updated_picture);
+  //     console.log(formData);
+  //     console.log(image);
+  //     console.log(blob);
+  //     // setTimeout(()=>{   setLoading(false);},1000)
+  //     // setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setTimeout(()=>{   setLoading(false);},1000)
+  //     setError(error.response.data.message);
+  //   }
+  // };
+
+
+    const updateProfielPicture = async () => {
     try {
       setLoading(true);
       let img = await getCroppedImage();
@@ -66,7 +125,7 @@ const UpdateProfilePicture = ({ setShow, image, setImage, setError,pRef }) => {
 
       const res = await uploadImages(formData, path, user.token);
       const updated_pic = await updateprofilePicture(res[0].url, user.token);
-
+      console.log(updated_pic);
       if (updated_pic === "ok") {
         const new_post = await createPost(
           "profilePicture",
@@ -76,11 +135,14 @@ const UpdateProfilePicture = ({ setShow, image, setImage, setError,pRef }) => {
           user.id,
           user.token
         );
+          //    setLoading(false);
+          // setImage("");
         if (new_post === "ok") {
           setLoading(false);
           setImage("");
+           pRef.current.style.backgroundImage = `url(${res[0].url})`;
+          dispatch(updatePicture(res[0].url));
           Cookies.set("user",JSON.stringify({...user,picture:res[0].url}))
-          dispatch(updatePicture(res[0].url))
           setShow(false);
         } else {
           setLoading(false);
@@ -113,7 +175,6 @@ const UpdateProfilePicture = ({ setShow, image, setImage, setError,pRef }) => {
           onChange={(e) => setDescription(e.target.value)}
           className="textarea_blue details_input"
         ></textarea>
-        {/* <img  src={image} width={50} height={50} /> */}
       </div>
       <div className="update_center">
         <div className="crooper">

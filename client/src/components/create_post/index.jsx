@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Feeling, LiveVideo, Photo } from "../../svg";
 import "./style.css";
 export default function CreatePost({ user, setVisible,profile }) {

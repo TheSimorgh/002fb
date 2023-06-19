@@ -7,7 +7,7 @@ import "./styles/icons/icons.css";
 import "./index.css";
 import "./styles/dark.css";
 
-import { Activate, Home, Login, NotFound, Profile, Reset } from "./pages";
+import { Activate, Home, Login, NotFound,  Reset,Profile } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 
@@ -20,6 +20,8 @@ import axios from "axios";
 
 
 export const server_url = "http://127.0.0.1:8000";
+// export const server_url = "http://localhost:8000";
+
 function App() {
   const { user } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
@@ -55,8 +57,8 @@ console.log(posts);
   }
   const data = [
     // { path: "/login", element: <Login /> },
-    { path: "/profile", element: <Profile  setVisible={setVisible} /> },
-    { path: "/profile/:username", element: <Profile  setVisible={setVisible}/> }, 
+    { path: "/profile", element: <Profile  setVisible={setVisible} getAllPosts={getAllPosts}/> },
+    { path: "/profile/:username", element: <Profile  setVisible={setVisible} getAllPosts={getAllPosts}/> }, 
     { path: "/", element: <Home setVisible={setVisible} visible={visible} posts={posts} /> },
     { path: "/activate/:token", element: <Activate /> },
   ];

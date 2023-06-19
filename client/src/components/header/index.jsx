@@ -17,7 +17,7 @@ import {
   Watch,
 } from "../../svg";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import { logout, reset } from "../../reducer/features/userSlice";
 import SearchMenu from "./SearchMenu";
@@ -29,7 +29,8 @@ const Header = ({page}) => {
   const { user } = useSelector((state) => state.user);
   // const { user } = useSelector((user) => ({...user}));
 
-  const user2 = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
+  const user2 = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : user;
+
   const dispatch = useDispatch();
   const color = "#65676b";
   // console.log("Header");
@@ -43,6 +44,9 @@ const Header = ({page}) => {
   const user_menu = useRef(null);
   useClickOutside(all_menu, () => setShowAllMenu(false));
   useClickOutside(user_menu, () => setShowUserMenu(false));
+  useEffect(()=>{
+
+  },[user2])
   return (
     <header>
       <div className="header_left">
@@ -109,8 +113,8 @@ const Header = ({page}) => {
             page === "profile" ? "active_link" : ""
           }`}
         >
-          <img src={user?.picture} alt={user?.username} />
-          <span>{user?.first_name}</span>
+          <img src={user2?.picture} alt={user2?.username} />
+          <span>{user2?.first_name}</span>
         </Link>
         <div
           className={`circle_icon hover1 ${showAllMenu && "active_header"}`}

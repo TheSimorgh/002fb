@@ -179,7 +179,7 @@ const userSlice = createSlice({
         state.user===action.payload
     }
     ,logout(state,action){
-        state.user=action.payload
+        state.user=""
     } ,
 
     truly(state) {

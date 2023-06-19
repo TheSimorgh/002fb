@@ -1,13 +1,12 @@
 import { useRef, useState } from "react";
 import { ProfilePicture } from "../../components";
 
-const ProfilePicInfo = ({ profile, visitor }) => {
+const ProfilePicturesInfos = ({ profile, loading, othername,visitor,photos }) => {
   const [show, setShow] = useState(false);
   const pRef = useRef(null);
-  const   othername ="sss"
   return (
     <div className="profile_img_wrap">
-      {show && <ProfilePicture setShow={setShow} pRef={pRef} />}
+      {show ? <ProfilePicture setShow={setShow} photos={photos}/> : null}
       <div className="profile_w_left">
         <div className="profile_w_img">
           <div
@@ -15,10 +14,10 @@ const ProfilePicInfo = ({ profile, visitor }) => {
             ref={pRef}
             style={{
               backgroundSize: "cover",
-              backgroundImage: `url(${profile.picture})`,
+              backgroundImage: `url(${profile?.picture})`,
             }}
           ></div>
-          {!visitor && (
+             {!visitor && (
             <div
               className="profile_circle hover1"
               onClick={() => setShow(true)}
@@ -29,39 +28,24 @@ const ProfilePicInfo = ({ profile, visitor }) => {
         </div>
         <div className="profile_w_col">
           <div className="profile_name">
-            {profile.first_name} {profile.last_name}
+            {profile?.first_name} {profile?.last_name}
             <div className="othername">{othername && `(${othername})`}</div>
           </div>
           <div className="profile_friend_count">
             {profile?.friends && (
               <div className="profile_card_count">
-                {profile?.friends.length === 0
+                {profile?.friends?.length === 0
                   ? ""
-                  : profile?.friends.length === 1
+                  : profile?.friends?.length === 1
                   ? "1 Friend"
-                  : `${profile?.friends.length} Friends`}
+                  : `${profile?.friends?.length} Friends`}
               </div>
             )}
-          </div>
-          <div className="profile_friend_imgs">
-            {profile?.friends &&
-              profile.friends.slice(0, 6).map((friend, i) => (
-                <Link to={`/profile/${friend.username}`} key={i}>
-                  <img
-                    src={friend.picture}
-                    alt=""
-                    style={{
-                      transform: `translateX(${-i * 7}px)`,
-                      zIndex: `${i}`,
-                    }}
-                  />
-                </Link>
-              ))}
           </div>
         </div>
       </div>
       {visitor ? (
-        <Friendship friendshipp={profile?.friendship} profileid={profile._id} />
+       null
       ) : (
         <div className="profile_w_right">
           <div className="blue_btn">
@@ -78,4 +62,4 @@ const ProfilePicInfo = ({ profile, visitor }) => {
   );
 };
 
-export default ProfilePicInfo;
+export default ProfilePicturesInfos;

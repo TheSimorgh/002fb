@@ -70,9 +70,9 @@ const Home = ({ setVisible, visible, posts }) => {
 
        
           <div className="posts">
-          {posts.map((post, i) => (
-                 <Post key={i} post={post} user={user} />   
-         ))} 
+          {posts || posts?.length >0 ? posts.map((post, i) => (
+                 <Post key={i} post={post} user={user} /> 
+         )) :( null)} 
           </div>
     </div>
     </div>
