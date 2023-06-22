@@ -69,6 +69,10 @@ const Cover = ({ cover, visitor,photos }) => {
     [croppedAreaPixels]
   );
   console.log(coverPicture);
+  console.log("coverPicture");
+  console.log(`Visitor:${visitor}`);
+  
+
 
   const coverRef = useRef(null);
   const [width, setWidth] = useState();

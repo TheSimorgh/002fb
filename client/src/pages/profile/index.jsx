@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { CreatePost, Header, Post } from "../../components";
+import { CreatePost, Header, Intro, Post } from "../../components";
 import { server_url } from "../../App";
 import { profileReducer } from "../../functions/reducers";
 import CreatePostPopup from "../../components/create_post_popup";
@@ -24,13 +24,13 @@ const Profile = ({ getAllPosts, setVisible }) => {
   const { user } = useSelector((state) => state.user);
   const userName = username === undefined ? user.username : username;
   const [othername, setOthername] = useState();
-  const [photos,setPhotos]=useState({})
+  const [photos, setPhotos] = useState({});
   const [{ loading, error, profile }, dispatch] = useReducer(profileReducer, {
     loading: false,
     profile: {},
     error: "",
   });
-  const visitor = userName === user.username ? false : true;
+  let visitor = userName === user.username ? false : true;
   console.log(`Visitor: ${visitor}`);
   console.log(`Photos: ${photos}`);
   console.log(photos);
@@ -46,8 +46,7 @@ const Profile = ({ getAllPosts, setVisible }) => {
       });
       if (data.ok === false) {
         navigate("/profile");
-      }else{
-       
+      } else {
         try {
           const images = await axios.post(
             `${server_url}/listImages`,
@@ -64,7 +63,6 @@ const Profile = ({ getAllPosts, setVisible }) => {
         }
         dispatch({ type: "PROFILE_SUCCESS", payload: data });
       }
-     
     } catch (error) {
       dispatch({ type: "PROFILE_ERROR", payload: error.response.data.message });
     }
@@ -82,13 +80,17 @@ const Profile = ({ getAllPosts, setVisible }) => {
   }, [profile]);
   // useEffect(() => {
   // }, [user.picture]);
-// console.log(photos);
+  // console.log(photos);
   return (
     <div className="profile">
       <Header page="profile" getAllPosts={getAllPosts} />
       <div className="profile_top">
         <div className="profile_container">
-          <Cover cover={profile.cover} profile={profile} photos={photos.resources} />
+          <Cover
+            cover={profile.cover}
+            profile={profile}
+            photos={photos.resources}
+          />
           <ProfilePicturesInfos
             profile={profile}
             loading={loading}
@@ -106,66 +108,68 @@ const Profile = ({ getAllPosts, setVisible }) => {
 
             <div className={`profile_grid`}>
               <div className="profile_left">
-               
-                  {loading ? (
-                    <>
-                      <div className="profile_card">
-                        <div className="profile_card_header">Intro</div>
-                        <div className="sekelton_loader">
-                          <HashLoader color="#1876f2" />
+                {loading ? (
+                  <>
+                    <div className="profile_card">
+                      <div className="profile_card_header">Intro</div>
+                      <div className="sekelton_loader">
+                        <HashLoader color="#1876f2" />
+                      </div>
+                    </div>
+                    <div className="profile_card">
+                      <div className="profile_card_header">
+                        Photos
+                        <div className="profile_header_link">
+                          See all photos
                         </div>
                       </div>
-                      <div className="profile_card">
-                        <div className="profile_card_header">
-                          Photos
-                          <div className="profile_header_link">
-                            See all photos
-                          </div>
-                        </div>
-                        <div className="sekelton_loader">
-                          <HashLoader color="#1876f2" />
+                      <div className="sekelton_loader">
+                        <HashLoader color="#1876f2" />
+                      </div>
+                    </div>
+                    <div className="profile_card">
+                      <div className="profile_card_header">
+                        Friends
+                        <div className="profile_header_link">
+                          See all friends
                         </div>
                       </div>
-                      <div className="profile_card">
-                        <div className="profile_card_header">
-                          Friends
-                          <div className="profile_header_link">
-                            See all friends
-                          </div>
-                        </div>
-                        <div className="sekelton_loader">
-                          <HashLoader color="#1876f2" />
-                        </div>
+                      <div className="sekelton_loader">
+                        <HashLoader color="#1876f2" />
                       </div>
-                    </>
-                  ) : (
-                    <>
-      
-                      <Photos
-                        username={userName}
-                        token={user.token}
-                        photos={photos}
-                      />
-                      <Friends friends={profile?.friends} />
-                    </>
-                  )}
-                  <div className="relative_fb_copyright">
-                    <Link to="/">Privacy </Link>
-                    <span>. </span>
-                    <Link to="/">Terms </Link>
-                    <span>. </span>
-                    <Link to="/">Advertising </Link>
-                    <span>. </span>
-                    <Link to="/">
-                      Ad Choices <i className="ad_choices_icon"></i>{" "}
-                    </Link>
-                    <span>. </span>
-                    <Link to="/"></Link>Cookies <span>. </span>
-                    <Link to="/">More </Link>
-                    <span>. </span> <br />
-                    Meta © 2022
-                  </div>
-                 
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Intro
+                      details={profile.details}
+                      visitor={visitor}
+                      setOthername={setOthername}
+                    />
+                    <Photos
+                      username={userName}
+                      token={user.token}
+                      photos={photos}
+                    />
+                    <Friends friends={profile?.friends} />
+                  </>
+                )}
+                <div className="relative_fb_copyright">
+                  <Link to="/">Privacy </Link>
+                  <span>. </span>
+                  <Link to="/">Terms </Link>
+                  <span>. </span>
+                  <Link to="/">Advertising </Link>
+                  <span>. </span>
+                  <Link to="/">
+                    Ad Choices <i className="ad_choices_icon"></i>{" "}
+                  </Link>
+                  <span>. </span>
+                  <Link to="/"></Link>Cookies <span>. </span>
+                  <Link to="/">More </Link>
+                  <span>. </span> <br />
+                  Meta © 2022
+                </div>
               </div>
               <div className="profile_right">
                 {!visitor && (
@@ -180,7 +184,12 @@ const Profile = ({ getAllPosts, setVisible }) => {
                   <div className="posts">
                     {profile?.posts && profile?.posts?.length ? (
                       profile?.posts.map((post) => (
-                        <Post post={post} user={user} key={post._id} profile={profile} />
+                        <Post
+                          post={post}
+                          user={user}
+                          key={post._id}
+                          profile={profile}
+                        />
                       ))
                     ) : (
                       <div className="no_posts">No posts available</div>
