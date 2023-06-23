@@ -1,10 +1,13 @@
+import useClickOutside from '../../helpers/clickOutside'
 import Detail from './Detail'
-
-const EditDetails = () => {
+import { useRef } from "react";
+const EditDetails = ({  setVisible,}) => {
+  const modal = useRef(null);
+  useClickOutside(modal, () => setVisible(false));
   return (
     <div className="blur">
       <div className="postBox infosBox" 
-      // ref={modal}
+      ref={modal}
       >
 
       </div>

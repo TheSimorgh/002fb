@@ -142,7 +142,7 @@ const Profile = ({ getAllPosts, setVisible }) => {
                 ) : (
                   <>
                     <Intro
-                      details={profile.details}
+                      detailss={profile.details}
                       visitor={visitor}
                       setOthername={setOthername}
                     />

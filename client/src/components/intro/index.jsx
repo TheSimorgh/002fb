@@ -6,9 +6,10 @@ import "./style.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import EditDetails from "./EditDetails";
+import { server_url } from "../../App";
 
-const Intro = ({ visitor, otherName, details }) => {
-  const [detailsS, setDetails] = useState();
+const Intro = ({ visitor, setOthername, detailss }) => {
+  const [details, setDetails] = useState(detailss);
   const { user } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
   console.log("details");
@@ -16,12 +17,12 @@ const Intro = ({ visitor, otherName, details }) => {
   console.log(details);
   const initial = {
     bio: details?.bio ? details?.bio : "",
-    otherName: details?.otherName ? details?.otherName : "23",
-    job: details?.job ? details?.job : "23",
-    workplace: details?.workplace ? details?.workplace : "23",
-    highSchool: details?.highSchool ? details?.highSchool : "23",
-    college: details?.college ? details?.college : "23",
-    currentCity: details?.currentCity ? details?.currentCity : "34",
+    otherName: details?.otherName ? details?.otherName : "",
+    job: details?.job ? details?.job : "",
+    workplace: details?.workplace ? details?.workplace : "",
+    highSchool: details?.highSchool ? details?.highSchool : "",
+    college: details?.college ? details?.college : "",
+    currentCity: details?.currentCity ? details?.currentCity : "",
     hometown: details?.hometown ? details?.hometown : "",
     relationship: details?.relationship ? details?.relationship : "",
     instagram: details?.instagram ? details?.instagram : "",
@@ -35,7 +36,20 @@ const Intro = ({ visitor, otherName, details }) => {
     setInfos({ ...infos, [name]: value });
     setMax(100 - e.target.value.length);
   };
-  const updateDetails = () => {};
+  const updateDetails =async () => {
+    try {
+      console.log(`sent`);
+      const {data}=await axios.put (`${server_url}/updateDetails`,{infos},{header:{Authorization:`Bearer ${user.token}`}})
+      setShowBio(false);
+      setDetails(data);
+      setOthername(data.otherName);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+  useEffect(()=>{
+    setDetails(detailss)
+  },[detailss])
   console.log("Intro visitor");
   console.log(visitor);
   console.log(infos);
