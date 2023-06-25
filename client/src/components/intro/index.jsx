@@ -39,7 +39,7 @@ const Intro = ({ visitor, setOthername, detailss }) => {
   const updateDetails =async () => {
     try {
       console.log(`sent`);
-      const {data}=await axios.put (`${server_url}/updateDetails`,{infos},{header:{Authorization:`Bearer ${user.token}`}})
+      const {data}=await axios.put (`${server_url}/updateDetails`,{infos},{headers:{Authorization:`Bearer ${user.token}`}})
       setShowBio(false);
       setDetails(data);
       setOthername(data.otherName);
