@@ -28,7 +28,7 @@ const Intro = ({ visitor, setOthername, detailss }) => {
     instagram: details?.instagram ? details?.instagram : "",
   };
   const [infos, setInfos] = useState(initial);
-  const [showBio, setShowBio] = useState(true);
+  const [showBio, setShowBio] = useState(false);
   const [max, setMax] = useState(infos?.bio ? 100 - infos?.bio.length : 100);
 
   const handleChange = (e) => {
@@ -49,6 +49,7 @@ const Intro = ({ visitor, setOthername, detailss }) => {
   };
   useEffect(()=>{
     setDetails(detailss)
+    setInfos(detailss);
   },[detailss])
   console.log("Intro visitor");
   console.log(visitor);
@@ -56,7 +57,7 @@ const Intro = ({ visitor, setOthername, detailss }) => {
   return (
     <div className="profile_card">
       <div className="profile_card_header">Intro</div>
-      {details?.bio && !showBio && (
+      {!details?.bio &&  !showBio && (
         <div className="info_col">
           <span className="info_text">{details?.bio} </span>
           {!visitor && (

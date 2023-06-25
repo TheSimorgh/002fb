@@ -1,7 +1,7 @@
 
 .pictureBox {
   width: 700px !important;
-
+  margin-top: 40px;
   height: 700px;
 }
 .update_picture_wrap {

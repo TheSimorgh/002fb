@@ -17,6 +17,7 @@ import { HashLoader } from "react-spinners";
 import { Photo } from "../../svg";
 import Photos from "./Photos";
 import Friends from "./Friends";
+import { useMediaQuery } from "react-responsive";
 
 const Profile = ({ getAllPosts, setVisible }) => {
   const { username } = useParams();
@@ -81,10 +82,30 @@ const Profile = ({ getAllPosts, setVisible }) => {
   // useEffect(() => {
   // }, [user.picture]);
   // console.log(photos);
+  const profileTop = useRef(null);
+  const leftSide = useRef(null);
+  const [height, setHeight] = useState();
+  const [leftHeight, setLeftHeight] = useState();
+  const [scrollHeight, setScrollHeight] = useState();
+  useEffect(() => {
+    setHeight(profileTop.current.clientHeight + 300);
+    setLeftHeight(leftSide.current.clientHeight);
+    window.addEventListener("scroll", getScroll, { passive: true });
+    return () => {
+      window.addEventListener("scroll", getScroll, { passive: true });
+    };
+  }, [loading, scrollHeight]);
+  const check = useMediaQuery({
+    query: "(min-width:901px)",
+  });
+  const getScroll = () => {
+    setScrollHeight(window.pageYOffset);
+  };
+
   return (
     <div className="profile">
       <Header page="profile" getAllPosts={getAllPosts} />
-      <div className="profile_top">
+      <div className="profile_top" ref={profileTop}>
         <div className="profile_container">
           <Cover
             cover={profile.cover}
@@ -106,8 +127,20 @@ const Profile = ({ getAllPosts, setVisible }) => {
           <div className="bottom_container">
             <PeopleUMayKnow />
 
-            <div className={`profile_grid`}>
-              <div className="profile_left">
+            <div
+              className={`profile_grid
+               ${
+                check && scrollHeight >= height && leftHeight > 1000
+                  ? "scrollFixed showLess"
+                  : check &&
+                    scrollHeight >= height &&
+                    leftHeight < 1000 &&
+                    "scrollFixed showMore"
+              }
+              `
+            }
+            >
+            <div className="profile_left" ref={leftSide}>
                 {loading ? (
                   <>
                     <div className="profile_card">
