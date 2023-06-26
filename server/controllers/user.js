@@ -461,6 +461,45 @@ exports.activateAccount = async (req, res) => {
     }
   }
 
+  exports.unfriend=async (req,res)=>{
+    try {
+
+      if (req.user.id !== req.params.id) {
+
+        const receiver=User.find(req.user.id)
+        const sender=User.find(req.params.id)
+        if(receiver.friends.includes(sender._id) && sender.friends.includes(receiver._id)){
+          await receiver.update({
+            $pull:{
+              friends:sender._id,
+              followers:sender._id,
+              following:sender._id,
+            }
+          
+          })
+          await sender.update({
+            $pull:{
+              friends:receiver._id,
+              followers:receiver._id,
+              following:receiver._id,
+            }
+          
+          })
+          res.json({ message: "unfriend request accepted" });
+        }else{
+          return res.status(400).json({ message: "Already not friends" });
+        }
+
+      }else{
+        return res.status(400).json({ message: "Already not friends" });
+      }
+
+
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   exports.auth=async (req,res)=>{
     try {
       console.log(`auth`);
