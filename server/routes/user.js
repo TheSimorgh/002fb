@@ -1,5 +1,5 @@
 const express = require("express");
-const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend, cancelRequest, follow, unFollow } = require("../controllers/user");
+const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend, cancelRequest, follow, unFollow, acceptRequest } = require("../controllers/user");
 const { authMidd } = require("../middlwares/authMidd");
 
 
@@ -20,7 +20,10 @@ router.put("/addFriend/:id", authMidd,addFriend);
 router.put("/cancelRequest/:id", authMidd,cancelRequest);
 router.put("/follow/:id", authMidd,follow);
 router.put("/follow/:id", authMidd,unFollow);
+router.put("/acceptRequest/:id", authMidd,acceptRequest);
 
-getProfile
+
+
+
 router.post("/auth",authMidd, auth)
 module.exports= router;
