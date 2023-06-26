@@ -500,6 +500,15 @@ exports.activateAccount = async (req, res) => {
     }
   }
 
+  exports.deleteRequest=async (req,res)=>{
+    try {
+ 
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+
   exports.auth=async (req,res)=>{
     try {
       console.log(`auth`);
