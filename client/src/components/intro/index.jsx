@@ -139,14 +139,7 @@ const Intro = ({ visitor, setOthername, detailss }) => {
           From {details?.hometown}
         </div>
       )}
-      {!visitor && (
-        <button
-          className="gray_btn hover1 w100"
-          onClick={() => setVisible(true)}
-        >
-          Edit Details
-        </button>
-      )}
+
       {details?.hometown && (
         <div className="info_profile">
           <img src="./icons/instagram.png" alt="" />
@@ -158,6 +151,14 @@ const Intro = ({ visitor, setOthername, detailss }) => {
             {details?.instagram}
           </a>
         </div>
+      )}
+            {!visitor && (
+        <button
+          className="gray_btn hover1 w100"
+          onClick={() => setVisible(true)}
+        >
+          Edit Details
+        </button>
       )}
       {visible && !visitor && (
         <EditDetails

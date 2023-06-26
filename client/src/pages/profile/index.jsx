@@ -94,6 +94,7 @@ const Profile = ({ getAllPosts, setVisible }) => {
     return () => {
       window.addEventListener("scroll", getScroll, { passive: true });
     };
+
   }, [loading, scrollHeight]);
   const check = useMediaQuery({
     query: "(min-width:901px)",
@@ -101,6 +102,9 @@ const Profile = ({ getAllPosts, setVisible }) => {
   const getScroll = () => {
     setScrollHeight(window.pageYOffset);
   };
+  console.log(scrollHeight);
+  console.log(user);
+  console.log(profile);
 
   return (
     <div className="profile">
