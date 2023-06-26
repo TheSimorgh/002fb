@@ -1,5 +1,5 @@
 const express = require("express");
-const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture,updateCove,updateDetailsr } = require("../controllers/user");
+const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend } = require("../controllers/user");
 const { authMidd } = require("../middlwares/authMidd");
 
 
@@ -13,9 +13,10 @@ router.post("/findUser", findUser)
 router.post("/sendResetPasswordCode", sendResetPasswordCode);
 router.post("/changePassword", changePassword);
 router.get("/getProfile/:username",authMidd,  getProfile);
-router.post("/updateProfilePicture", authMidd,updateProfilePicture);
-router.post("/updateProfilePicture", authMidd,updateCover);
-router.post("/updateDetails", authMidd,updateDetails);
+router.put("/updateProfilePicture", authMidd,updateProfilePicture);
+router.put("/updateCover", authMidd,updateCover);
+router.put("/updateDetails", authMidd,updateDetails);
+router.put("/addFriend/:id", authMidd,addFriend);
 
 
 getProfile

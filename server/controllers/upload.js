@@ -14,7 +14,8 @@ exports.uploadImages = async (req, res) => {
   try {
     const { path } = req.body;
     let files = Object.values(req.files).flat();
-    console.log(files);
+    // console.log(files);
+    console.log("uploadImages");
     let images = [];
     for (const file of files) {
       const url = await uploadToCloudinary(file, path);
