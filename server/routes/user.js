@@ -1,5 +1,5 @@
 const express = require("express");
-const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend } = require("../controllers/user");
+const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend, cancelRequest } = require("../controllers/user");
 const { authMidd } = require("../middlwares/authMidd");
 
 
@@ -17,6 +17,7 @@ router.put("/updateProfilePicture", authMidd,updateProfilePicture);
 router.put("/updateCover", authMidd,updateCover);
 router.put("/updateDetails", authMidd,updateDetails);
 router.put("/addFriend/:id", authMidd,addFriend);
+router.put("/cancelRequest/:id", authMidd,cancelRequest);
 
 
 getProfile
