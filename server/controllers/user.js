@@ -431,6 +431,36 @@ exports.activateAccount = async (req, res) => {
     }
   }
 
+  exports.deleteRequest=async (req,res)=>{
+    try {
+      if (req.user.id !== req.params.id) {
+        const receiver = await User.findById(req.user.id);
+        const sender = await User.findById(req.params.id);
+        if (receiver.requests.includes(sender._id)) {
+          await receiver.update({
+            $pull: {
+              requests: sender._id,
+              followers: sender._id,
+            },
+          });
+          await sender.update({
+            $pull: {
+              following: receiver._id,
+            },
+          });
+  
+          res.json({ message: "delete request accepted" });
+        } else {
+          return res.status(400).json({ message: "Already deleted" });
+        }
+      } else {
+        return res.status(400).json({ message: "You can't delete yourself" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   exports.auth=async (req,res)=>{
     try {
       console.log(`auth`);
