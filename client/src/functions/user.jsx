@@ -47,7 +47,7 @@ export const addFriend = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/addFriend/${id}`,
+      `${server_url}/addFriend/${id}`,
       {},
 
       {
@@ -66,7 +66,7 @@ export const unFriend = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/unfriend/${id}`,
+      `${server_url}/unfriend/${id}`,
       {},
 
       {
@@ -85,7 +85,7 @@ export const cancelRequest = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/cancelRequest/${id}`,
+      `${server_url}/cancelRequest/${id}`,
       {},
 
       {
@@ -104,7 +104,7 @@ export const acceptRequest = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/acceptRequest/${id}`,
+      `${server_url}/acceptRequest/${id}`,
       {},
 
       {
@@ -123,7 +123,7 @@ export const deleteRequest = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/deleteRequest/${id}`,
+      `${server_url}/deleteRequest/${id}`,
       {},
 
       {
@@ -142,7 +142,7 @@ export const follow = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/follow/${id}`,
+      `${server_url}/follow/${id}`,
       {},
 
       {
@@ -161,7 +161,7 @@ export const unFollow = async (id, token) => {
   try {
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BACKEND_URL}/unfollow/${id}`,
+      `${server_url}/unfollow/${id}`,
       {},
 
       {

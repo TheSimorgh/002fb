@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { ProfilePicture } from "../../components";
+import Friendship from "./Friendship";
 
 const ProfilePicturesInfos = ({ profile, loading, othername,visitor,photos }) => {
   const [show, setShow] = useState(false);
@@ -45,7 +46,8 @@ const ProfilePicturesInfos = ({ profile, loading, othername,visitor,photos }) =>
         </div>
       </div>
       {visitor ? (
-       null
+        
+       <Friendship friendshipp={profile?.friendship} profileid={profile._id}  />
       ) : (
         <div className="profile_w_right">
           <div className="blue_btn">
