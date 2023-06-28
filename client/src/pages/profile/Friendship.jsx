@@ -21,7 +21,7 @@ const Friendship = ({ friendshipp, profileid }) => {
   const menu = useRef(null);
   const menu1 = useRef(null);
 
-  useClickOutside(menu,  () => setFriendsMenu(false));
+  useClickOutside(menu, () => setFriendsMenu(false));
   useClickOutside(menu1, () => setRespondMenu(false));
   useEffect(() => {
     setFriendship(friendshipp);
@@ -54,7 +54,7 @@ const Friendship = ({ friendshipp, profileid }) => {
     await acceptRequest(profileid, user.token);
   };
 
-  const cancelReqHandelr = async () => {
+  const cancelReqHandler = async () => {
     setFriendship({ ...friendship, requestSent: false, following: false });
     await cancelRequest(profileid, user.token);
   };
@@ -134,13 +134,9 @@ const Friendship = ({ friendshipp, profileid }) => {
           </button>
         )
       )}
-           {friendship?.requestSent ? (
-        <button className="blue_btn" onClick={() => cancelReqHandelr()}>
-          <img
-            src="/icons/cancelRequest.png"
-            className="invert"
-            alt=""
-          />
+      {friendship?.requestSent ? (
+        <button className="blue_btn" onClick={() => cancelReqHandler()}>
+          <img src="/icons/cancelRequest.png" className="invert" alt="" />
           <span>Cancel Request</span>
         </button>
       ) : (
