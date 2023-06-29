@@ -32,3 +32,26 @@ try {
 }
 }
 
+
+
+
+export const postReact=async (postId,react,token)=>{
+
+  try {
+    const {data}=await axios.put(`${server_url}/postReact`, {
+      postId,
+      react,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    ) 
+    return "ok";
+  } catch (error) {
+    return error.response.data.message;
+
+  }
+
+}

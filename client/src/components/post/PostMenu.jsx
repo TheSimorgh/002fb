@@ -27,6 +27,9 @@ const saveHandler=()=>{
 const downloadImages=()=>{
     console.log("downloadImages");
 }
+const deleteHandler = async () => {
+
+};
   return (
     <ul className="post_menu" ref={menu}>
       {test && <MenuItem icon="pin_icon" title="Pin Post" />}
