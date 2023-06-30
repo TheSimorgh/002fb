@@ -35,6 +35,8 @@ exports.postReact = async (req, res) => {
 exports.getReacts = async  (req,res) => {
   try {
     const reactsArray = await React.find({ postRef: req.params.id });
+    const reactsArray2 = await React.findOne({ postRef: req.params.id });
+
         /*
     const check1 = reacts.find(
       (x) => x.reactBy.toString() == req.user.id
@@ -78,6 +80,19 @@ exports.getReacts = async  (req,res) => {
         postRef: req.params.id,
         reactBy: req.user.id,
       });
+      console.log(check);
+      console.log("////////////////////////////////////////////////////////////");
+      console.log(check?.react);
+      console.log("////////////////////////////////////////////////////////////");
+      console.log(reactsArray.length);
+      console.log("////////////////////////////////////////////////////////////");
+      console.log(reactsArray);
+      console.log("////////////////////////////////////////////////////////////");
+      console.log(reacts);
+      console.log("////////////////////////////////////////////////////////////");
+
+
+
       const user = await User.findById(req.user.id);
       const checkSaved = user?.savedPosts.find(
         (x) => x.post.toString() === req.params.id
@@ -87,6 +102,9 @@ exports.getReacts = async  (req,res) => {
         check: check?.react,
         total: reactsArray.length,
         checkSaved: checkSaved ? true : false,
+        reactsArray,
+        reactsArray2,
+        newReacts
       });
   } catch (error) {
     return res.status(500).json({ message: error.message });
