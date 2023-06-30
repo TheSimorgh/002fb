@@ -1,7 +1,7 @@
 const express = require("express");
 const { authMidd } = require("../middlwares/authMidd");
-const {  getReacts, postReact } = require("../controllers/react");
+const { postReact, getReacts } = require("../controllers/react");
 const router = express.Router();
-router.put("/reactPost",authMidd,postReact)
-router.get("/reactPost/:id",authMidd,getReacts)
+router.put("/postReact",authMidd,postReact)
+router.get("/getReacts/:id",authMidd,getReacts)
 module.exports = router;
