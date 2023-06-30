@@ -11,19 +11,56 @@ import Moment from "react-moment";
 import CreateComment from "./CreateComment";
 import Comment from "./Comment";
 import PostMenu from "./PostMenu";
+import { getReacts, postReact } from "../../functions/post";
 
 const Post = ({ post, user,profile }) => {
   const [reacts, setReacts] = useState();
+  const [check, setCheck] = useState();
   const [visible, setVisible] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-
+  const [total, setTotal] = useState(0);
   const [count, setCount] = useState(1);
-  const total = 5;
   const comments = [1, 2, 35, 5, 7, 8];
   const [checkSaved, setCheckSaved] = useState(true);
   const postRef = useRef(null);
 
-  const reactHandler = () => {};
+  useEffect(() => {
+    getPostReacts();
+    
+  }, [post]);
+
+
+  const getPostReacts=async()=>{
+    const res = await getReacts(post.id,user.token)
+    setReacts(res.reacts)
+    setCheck(res.check);
+    setTotal(res.total);
+  }
+  const reactHandler = async (type) => {
+    postReact(post._id, type, user.token);
+    if (check == type) {
+      setCheck();
+      let index = reacts.findIndex((x) => x.react == check);
+      if (index !== -1) {
+        setReacts([...reacts, (reacts[index].count = --reacts[index].count)]);
+        setTotal((prev) => --prev);
+      }
+    } else {
+      setCheck(type);
+      let index = reacts.findIndex((x) => x.react == type);
+      let index1 = reacts.findIndex((x) => x.react == check);
+      if (index !== -1) {
+        setReacts([...reacts, (reacts[index].count = ++reacts[index].count)]);
+        setTotal((prev) => ++prev);
+        console.log(reacts);
+      }
+      if (index1 !== -1) {
+        setReacts([...reacts, (reacts[index1].count = --reacts[index1].count)]);
+        setTotal((prev) => --prev);
+        console.log(reacts);
+      }
+    }
+  };
   console.log("post");
   console.log(post);
   return (
@@ -158,11 +195,41 @@ const Post = ({ post, user,profile }) => {
               setVisible(false);
             }, 500);
           }}
-          // onClick={() => reactHandler(check ? check : "like")}
+          onClick={() => reactHandler(check ? check : "like")}
         >
-          <i className="like_icon"></i>
+                {check ? (
+            <img
+              src={`/reacts/${check}.svg`}
+              alt=""
+              className="small_react"
+              style={{ width: "18px" }}
+            />
+          ) : (
+            <i className="like_icon"></i>
+          )}
 
-          <span>Like</span>
+          <span
+            style={{
+              color: `
+          
+          ${
+            check === "like"
+              ? "#4267b2"
+              : check === "love"
+              ? "#f63459"
+              : check === "haha"
+              ? "#f7b125"
+              : check === "sad"
+              ? "#f7b125"
+              : check === "wow"
+              ? "#f7b125"
+              : check === "angry"
+              ? "#e4605a"
+              : ""
+          }
+          `,
+            }}
+          >{check ? check : "Like"}</span>
         </div>
         <div className="post_action hover1">
           <i className="comment_icon"></i>

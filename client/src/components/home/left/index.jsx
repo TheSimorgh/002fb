@@ -71,13 +71,13 @@ const LeftHome = ({user}) => {
     </div>
     <div className="shortcut_list">
       <Shortcut
-        link="https://www.youtube.com/c/MohamedHaJJi1/featured"
+        link="https://www.youtube.com"
         img="../../images/ytb.png"
         name="My Youtube channel"
       />
 
       <Shortcut
-        link="https://www.instagram.com/med_hajji7/"
+        link="https://www.instagram.com"
         img="../../images/insta.png"
         name="My Instagram "
       />

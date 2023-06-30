@@ -5,27 +5,27 @@ import { useSelector } from "react-redux";
 const reactsArray = [
   {
     name: "like",
-    image: "../../../public/reacts/like.gif",
+    image: "/reacts/like.gif",
   },
   {
     name: "love",
-    image: "../../../public/reacts/love.gif",
+    image: "/reacts/love.gif",
   },
   {
     name: "haha",
-    image: "../../../public/reacts/haha.gif",
+    image: "/reacts/haha.gif",
   },
   {
     name: "wow",
-    image: "../../../public/reacts/wow.gif",
+    image: "/reacts/wow.gif",
   },
   {
     name: "sad",
-    image: "../../../public/reacts/sad.gif",
+    image: "/reacts/sad.gif",
   },
   {
     name: "angry",
-    image: "../../../public/reacts/angry.gif",
+    image: "/reacts/angry.gif",
   },
 ];
 

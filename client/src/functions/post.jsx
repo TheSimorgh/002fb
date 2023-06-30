@@ -55,3 +55,20 @@ export const postReact=async (postId,react,token)=>{
   }
 
 }
+
+export const getReacts = async (postId, token) => {
+  try {
+    const { data } = await axios.get(
+      `${server_url}/getReacts/${postId}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
