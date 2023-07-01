@@ -13,29 +13,30 @@ import Comment from "./Comment";
 import PostMenu from "./PostMenu";
 import { getReacts, postReact } from "../../functions/post";
 
-const Post = ({ post, user,profile }) => {
+const Post = ({ post, user, profile }) => {
   const [reacts, setReacts] = useState();
   const [check, setCheck] = useState();
   const [visible, setVisible] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [total, setTotal] = useState(0);
   const [count, setCount] = useState(1);
-  const comments = [1, 2, 35, 5, 7, 8];
+  const [comments, setComments] = useState([]);
   const [checkSaved, setCheckSaved] = useState(true);
   const postRef = useRef(null);
-
+  console.log(post);
   useEffect(() => {
     getPostReacts();
-    
+  }, [post]);
+  useEffect(() => {
+    setComments(post?.comments);
   }, [post]);
 
-
-  const getPostReacts=async()=>{
-    const res = await getReacts(post.id,user.token)
-    setReacts(res.reacts)
+  const getPostReacts = async () => {
+    const res = await getReacts(post.id, user.token);
+    setReacts(res.reacts);
     setCheck(res.check);
     setTotal(res.total);
-  }
+  };
   const reactHandler = async (type) => {
     postReact(post._id, type, user.token);
     if (check == type) {
@@ -61,10 +62,13 @@ const Post = ({ post, user,profile }) => {
       }
     }
   };
-  console.log("post");
-  console.log(post);
+  const showMore = () => {
+    setCount((prev) => prev + 3);
+  };
+  // console.log("post");
+  // console.log(post);
   return (
-    <div className="post"   style={{ width: `${profile && "100%"}` }}>
+    <div className="post" style={{ width: `${profile && "100%"}` }}>
       <div className="post_header">
         <Link
           to={`/profile/${post?.user?.username}`}
@@ -150,7 +154,7 @@ const Post = ({ post, user,profile }) => {
         <div className="post_cover_wrap">
           <img src={post.images[0].url} alt="" />
         </div>
-      ) }
+      )}
 
       <div className="post_infos">
         <div className="reacts_count">
@@ -197,7 +201,7 @@ const Post = ({ post, user,profile }) => {
           }}
           onClick={() => reactHandler(check ? check : "like")}
         >
-                {check ? (
+          {check ? (
             <img
               src={`/reacts/${check}.svg`}
               alt=""
@@ -229,7 +233,9 @@ const Post = ({ post, user,profile }) => {
           }
           `,
             }}
-          >{check ? check : "Like"}</span>
+          >
+            {check ? check : "Like"}
+          </span>
         </div>
         <div className="post_action hover1">
           <i className="comment_icon"></i>
@@ -243,13 +249,25 @@ const Post = ({ post, user,profile }) => {
 
       <div className="comments_wrap">
         <div className="comments_order"> </div>
-        <CreateComment user={user} />
+        <CreateComment
+          user={user}
+          postId={post._id}
+          setComments={setComments}
+          setCount={setCount}
+        />
 
         {comments &&
-          // comments.sort((a,b)=>{return new Date(b.commentAt)-new Date(a.commentAt)})
           comments
+            .sort((a, b) => {
+              return new Date(b.commentAt) - new Date(a.commentAt);
+            })
             .slice(0, count)
             .map((comment, i) => <Comment comment={comment} key={i} />)}
+        {count < comments.length && (
+          <div className="view_comments" onClick={() => showMore()}>
+            View more comments
+          </div>
+        )}
       </div>
       {showMenu && (
         <PostMenu

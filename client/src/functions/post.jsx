@@ -72,3 +72,35 @@ export const getReacts = async (postId, token) => {
     return error.response.data.message;
   }
 };
+
+
+
+
+export const comment = async (postId, comment, image, token) => {  
+  try {
+    const {data} = await axios.put(`${server_url}/comment`,
+    {
+      postId,
+      comment,
+      image,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    )
+    return data;
+
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
+export const xxx = async () => {  
+  try {
+
+    console.log("1");
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
