@@ -251,8 +251,13 @@ exports.activateAccount = async (req, res) => {
         friendship.requestSent = true;
       }
   
-      const posts = await Post.find({user:profile._id}).populate("user").sort({ createdAt: -1 });
-      await profile.populate("friends", "first_name last_name username picture");
+      const posts = await Post.find({ user: profile._id })
+      .populate("user")
+      .populate(
+        "comments.commentBy",
+        "first_name last_name picture username commentAt"
+      )
+      .sort({ createdAt: -1 });      await profile.populate("friends", "first_name last_name username picture");
       res.json({...profile.toObject(), posts,friendship})
       console.log(req.user);
     } catch (error) {

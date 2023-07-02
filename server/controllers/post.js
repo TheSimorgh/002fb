@@ -6,6 +6,7 @@ exports.createPost=async (req,res)=>{
     try {
      const post = await new Post(req.body).save();
      await post.populate("user", "first_name last_name cover picture username");
+
      res.json(post);
       console.log(`createPost`);
   
@@ -16,9 +17,18 @@ exports.createPost=async (req,res)=>{
 
   exports.getAllPosts=async (req,res)=>{
     try {
-      const posts = await Post.find().populate("user", "first_name last_name picture username cover").sort({ createdAt: -1 })
-      res.status(200).json(posts)
-      console.log(`getAllPosts`);
+      // const posts = await Post.find().populate("user", "first_name last_name picture username cover").sort({ createdAt: -1 })
+      // res.status(200).json(posts)
+      // console.log(`getAllPosts`);
+
+      const followingTemp = await User.findById(req.user.id).select("following")
+      const following =followingTemp.following;
+      const promises = following.map(user=>{
+        return Post.find({user:user}).populate("user", "first_name last_name picture username cover")
+        .populate("comments.commentBy", "first_name last_name picture username")
+        .sort({ createdAt: -1 })
+        .limit(10);
+      })
   
     } catch (error) {
       return res.status(500).json({message:error.message})
