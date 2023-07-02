@@ -29,7 +29,19 @@ exports.createPost=async (req,res)=>{
         .sort({ createdAt: -1 })
         .limit(10);
       })
-  
+      console.log(following);
+      console.log(promises);
+      const followingPosts = await (await Promise.all(promises)).flat();
+      const userPosts = await Post.find({ user: req.user.id })
+        .populate("user", "first_name last_name picture username cover")
+        .populate("comments.commentBy", "first_name last_name picture username")
+        .sort({ createdAt: -1 })
+        .limit(10);
+      followingPosts.push(...[...userPosts]);
+      followingPosts.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      });
+      res.json(followingPosts);
     } catch (error) {
       return res.status(500).json({message:error.message})
 
