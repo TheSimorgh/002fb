@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
@@ -12,13 +13,7 @@ import PostError from "./PostError";
 import dataURItoBlob from "../../helpers/dataURItoBlog";
 import { uploadImages } from "../../functions/uploadImages";
 
-const CreatePostPopup = ({
-  user,
-  setVisible,
-  // posts,
-  // dispatch,
-  // profile,
-}) => {
+const CreatePostPopup = ({ user, setVisible, posts, dispatch,  profile }) => {
   const popup = useRef(null);
   const [text, setText] = useState("");
   const [showPrev, setShowPrev] = useState(false);
@@ -44,6 +39,7 @@ const CreatePostPopup = ({
       );
       setLoading(false);
       if (res.status === "ok") {
+        dispatch({type:profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",payload:[res.data, ...posts]})
         setBackground("");
         setText("");
         setVisible(false);
@@ -76,6 +72,8 @@ const CreatePostPopup = ({
       );
       setLoading(false);
       if (res.status === "ok") {
+        dispatch({type:profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",payload:[res.data, ...posts]})
+
         setBackground("");
         setText("");
         setImages("");
@@ -88,6 +86,8 @@ const CreatePostPopup = ({
       const res = await createPost(null, null, text, null, user.id, user.token);
       setLoading(false);
       if (res.status === "ok") {
+        dispatch({type:profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",payload:[res.data, ...posts]})
+
         setBackground("");
         setText("");
         setImages("");

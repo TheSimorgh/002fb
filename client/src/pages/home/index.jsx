@@ -19,7 +19,7 @@ import {
 import LeftHome from "../../components/home/left";
 import "./style.css";
 
-const Home = ({ setVisible, visible, posts }) => {
+const Home = ({ setVisible, visible, posts,loading,getAllPosts }) => {
   // const {user}=useSelector((state)=>state.user)
   // const user2 =  Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
   // const [data,setData]=useState(user2)
@@ -53,14 +53,14 @@ const Home = ({ setVisible, visible, posts }) => {
   const [height, setHeight] = useState();
   useEffect(() => {
     setHeight(middle.current.clientHeight);
-  }, [ ]);
+  }, [ loading,height]);
 
   return (
     <div
       className="home"
        style={{ height: `${height + 150}px` }}
     >
-      <Header page="home"/>
+      <Header page="home" getAllPosts={getAllPosts} />
       <LeftHome user={user} />
       <RightHome user={user} />
       <div className="home_middle" ref={middle}>

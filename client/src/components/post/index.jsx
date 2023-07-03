@@ -65,6 +65,9 @@ const Post = ({ post, user, profile }) => {
   const showMore = () => {
     setCount((prev) => prev + 3);
   };
+  const showLess = () => {
+    setCount((prev) => prev - 3);
+  };
   // console.log("post");
   // console.log(post);
   return (
@@ -266,6 +269,12 @@ const Post = ({ post, user, profile }) => {
         {count < comments.length && (
           <div className="view_comments" onClick={() => showMore()}>
             View more comments
+          </div>
+        )}
+
+        {count > 3 && (
+          <div className="view_comments" onClick={() => showLess()}>
+            View Less comments
           </div>
         )}
       </div>

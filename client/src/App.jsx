@@ -7,7 +7,7 @@ import "./styles/icons/icons.css";
 import "./index.css";
 import "./styles/dark.css";
 
-import { Activate, Home, Login, NotFound,  Reset,Profile } from "./pages";
+import { Activate, Home, Login, NotFound, Reset, Profile } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 
@@ -17,37 +17,32 @@ import { useEffect, useReducer, useState } from "react";
 import { postsReducer } from "./functions/reducers";
 import axios from "axios";
 
-
-
 export const server_url = "http://127.0.0.1:8000";
 // export const server_url = "http://localhost:8000";
 
 function App() {
   const { user } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
-  const [{loading,error,posts},dispatch]=useReducer(postsReducer,{
+  const [{ loading, error, posts }, dispatch] = useReducer(postsReducer, {
     loading: false,
     posts: [],
     error: "",
-  })
-  useEffect(()=>{getAllPosts(),
-  console.log(posts);},[])
-console.log(posts);
-  async function getAllPosts(){
+  });
+  useEffect(() => {
+    getAllPosts(), console.log(posts);
+  }, []);
+  console.log(posts);
+  async function getAllPosts() {
     try {
       dispatch({
         type: "POSTS_REQUEST",
       });
-      const { data } = await axios.get(
-        `${server_url}/getAllPosts`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-      dispatch({type:"POSTS_SUCCESS",payload:data})
-
+      const { data } = await axios.get(`${server_url}/getAllPosts`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      dispatch({ type: "POSTS_SUCCESS", payload: data });
     } catch (error) {
       dispatch({
         type: "POSTS_ERROR",
@@ -57,15 +52,32 @@ console.log(posts);
   }
   const data = [
     // { path: "/login", element: <Login /> },
-    { path: "/profile", element: <Profile  setVisible={setVisible} getAllPosts={getAllPosts}/> },
-    { path: "/profile/:username", element: <Profile  setVisible={setVisible} getAllPosts={getAllPosts}/> }, 
-    { path: "/", element: <Home setVisible={setVisible} visible={visible} posts={posts} /> },
+    {
+      path: "/profile",
+      element: <Profile  getAllPosts={getAllPosts} posts={posts}/>,
+    },
+    {
+      path: "/profile/:username",
+      element: <Profile  getAllPosts={getAllPosts} posts={posts}/>,
+    },
+    {
+      path: "/",
+      element: (
+        <Home
+          setVisible={setVisible}
+          visible={visible}
+          posts={posts}
+          loading={loading}
+          getAllPosts={getAllPosts}
+        />
+      ),
+    },
     { path: "/activate/:token", element: <Activate /> },
   ];
 
   return (
     <div className={`"container mx-auto h-screen bg-dark`}>
-      {visible && <CreatePostPopup user={user} setVisible={setVisible} />}
+      {visible && <CreatePostPopup user={user} setVisible={setVisible}  dispatch={dispatch} posts={posts} />}
       <Routes>
         <Route element={<LoggedInRoutes />}>
           {data.map((e, i) => (

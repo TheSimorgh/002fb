@@ -65,8 +65,7 @@ const CreateComment = ({ user, postId, setComments, setCount }) => {
         formData.append("path", path);
         formData.append("file", img);
         const imgComment = await uploadImages(formData, path, user.token);
-        console.log("imgComment");
-        console.log(imgComment);
+
         const comments = await comment(
           postId,
           text,

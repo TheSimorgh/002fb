@@ -19,12 +19,14 @@ import Photos from "./Photos";
 import Friends from "./Friends";
 import { useMediaQuery } from "react-responsive";
 
-const Profile = ({ getAllPosts, setVisible }) => {
+const Profile = ({ getAllPosts, posts }) => {
   const { username } = useParams();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const userName = username === undefined ? user.username : username;
-  const [othername, setOthername] = useState();
+  const [othername, setOthername] = useState(false);
+  const [visible, setVisible] = useState();
+
   const [photos, setPhotos] = useState({});
   const [{ loading, error, profile }, dispatch] = useReducer(profileReducer, {
     loading: false,
@@ -94,7 +96,6 @@ const Profile = ({ getAllPosts, setVisible }) => {
     return () => {
       window.addEventListener("scroll", getScroll, { passive: true });
     };
-
   }, [loading, scrollHeight]);
   const check = useMediaQuery({
     query: "(min-width:901px)",
@@ -108,6 +109,16 @@ const Profile = ({ getAllPosts, setVisible }) => {
 
   return (
     <div className="profile">
+      {visible && (
+        <CreatePostPopup
+          user={user}
+          setVisible={setVisible}
+          dispatch={dispatch}
+          posts={profile?.posts}
+          profile
+        />
+      )}
+
       <Header page="profile" getAllPosts={getAllPosts} />
       <div className="profile_top" ref={profileTop}>
         <div className="profile_container">
@@ -134,17 +145,16 @@ const Profile = ({ getAllPosts, setVisible }) => {
             <div
               className={`profile_grid
                ${
-                check && scrollHeight >= height && leftHeight > 1000
-                  ? "scrollFixed showLess"
-                  : check &&
-                    scrollHeight >= height &&
-                    leftHeight < 1000 &&
-                    "scrollFixed showMore"
-              }
-              `
-            }
+                 check && scrollHeight >= height && leftHeight > 1000
+                   ? "scrollFixed showLess"
+                   : check &&
+                     scrollHeight >= height &&
+                     leftHeight < 1000 &&
+                     "scrollFixed showMore"
+               }
+              `}
             >
-            <div className="profile_left" ref={leftSide}>
+              <div className="profile_left" ref={leftSide}>
                 {loading ? (
                   <>
                     <div className="profile_card">
@@ -227,7 +237,7 @@ const Profile = ({ getAllPosts, setVisible }) => {
                           key={post._id}
                           profile={profile}
                         />
-                      ))
+                      )).reverse()
                     ) : (
                       <div className="no_posts">No posts available</div>
                     )}

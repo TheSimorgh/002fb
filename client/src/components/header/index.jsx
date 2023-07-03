@@ -24,7 +24,7 @@ import SearchMenu from "./SearchMenu";
 import AllMenu from "./AllMenu";
 import useClickOutside from "../../helpers/clickOutside";
 import UserMenu from "./user_menu";
-const Header = ({page}) => {
+const Header = ({page,getAllPosts}) => {
   // const { user } = useSelector((user) => ({ ...user }));
   const { user } = useSelector((state) => state.user);
   // const { user } = useSelector((user) => ({...user}));
@@ -81,8 +81,8 @@ const Header = ({page}) => {
           className={`middle_icon ${page === "home" ? "active" : "hover1"}`}
 
           onClick={
-            () => {}
-            // getAllPosts()
+            () =>  getAllPosts()
+            
           }
         >
            {page === "home" ? <HomeActive /> : <Home color={color} />} 

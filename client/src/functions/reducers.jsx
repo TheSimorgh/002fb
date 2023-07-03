@@ -15,6 +15,7 @@ export function profileReducer(state,action){
     switch (type) {
         case "PROFILE_REQUEST":    return { ...state, loading: true, error: "" };
         case "PROFILE_SUCCESS": return {...state, loading: false, profile: payload,error: "",};
+        case "PROFILE_POSTS": return { loading: false,profile: { ...state.profile, posts: payload }, error: "",};
         case "PROFILE_ERROR": return { ...state, loading: false, error: payload };
         default:return state;
             

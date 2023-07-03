@@ -75,23 +75,23 @@ export const getReacts = async (postId, token) => {
 
 
 
-
-export const comment = async (postId, comment, image, token) => {  
+export const comment = async (postId, comment, image, token) => {
   try {
-    const {data} = await axios.put(`${server_url}/comment`,
-    {
-      postId,
-      comment,
-      image,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const { data } = await axios.put(
+      `${server_url}/comment`,
+      {
+        postId,
+        comment,
+        image,
       },
-    }
-    )
-    return data;
 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
   } catch (error) {
     return error.response.data.message;
   }
