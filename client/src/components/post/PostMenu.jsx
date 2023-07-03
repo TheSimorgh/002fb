@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 
 import { useRef, useState } from "react";
 import useClickOutside from "../../helpers/clickOutside";
 import MenuItem from "./MenuItem";
+import { deletePost, savePost } from "../../functions/post";
 
 
 const PostMenu = ({
@@ -21,14 +24,24 @@ const PostMenu = ({
     const menu = useRef(null);
     useClickOutside(menu, () => setShowMenu(false));
 
-const saveHandler=()=>{
-    console.log("saveHandler");
-}
-const downloadImages=()=>{
-    console.log("downloadImages");
-}
+    const saveHandler = async () => {
+      savePost(postId, token);
+      if (checkSaved) {
+        setCheckSaved(false);
+      } else {
+        setCheckSaved(true);
+      }
+    };
+    const downloadImages = async () => {
+      images.map((img) => {
+        saveAs(img.url, "image.jpg");
+      });
+    };
 const deleteHandler = async () => {
-
+  const res = await deletePost(postId,token)
+  if (res.status === "ok") {
+    postRef.current.remove();
+  }
 };
   return (
     <ul className="post_menu" ref={menu}>
