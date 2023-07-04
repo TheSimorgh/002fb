@@ -72,7 +72,7 @@ const Post = ({ post, user, profile }) => {
   // console.log("post");
   // console.log(post);
   return (
-    <div className="post" style={{ width: `${profile && "100%"}` }}>
+    <div className="post" style={{ width: `${profile && "100%"}` }} ref={postRef}>
       <div className="post_header">
         <Link
           to={`/profile/${post?.user?.username}`}
