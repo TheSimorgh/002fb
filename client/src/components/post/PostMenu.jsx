@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import useClickOutside from "../../helpers/clickOutside";
 import MenuItem from "./MenuItem";
 import { deletePost, savePost } from "../../functions/post";
-
+import { saveAs } from "file-saver";
 
 const PostMenu = ({
     postUserId,

@@ -21,7 +21,7 @@ const Post = ({ post, user, profile }) => {
   const [total, setTotal] = useState(0);
   const [count, setCount] = useState(1);
   const [comments, setComments] = useState([]);
-  const [checkSaved, setCheckSaved] = useState(true);
+  const [checkSaved, setCheckSaved] = useState();
   const postRef = useRef(null);
   console.log(post);
   useEffect(() => {
@@ -36,6 +36,7 @@ const Post = ({ post, user, profile }) => {
     setReacts(res.reacts);
     setCheck(res.check);
     setTotal(res.total);
+    setCheckSaved(res.checkSaved);
   };
   const reactHandler = async (type) => {
     postReact(post._id, type, user.token);
