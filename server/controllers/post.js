@@ -8,7 +8,7 @@ exports.createPost=async (req,res)=>{
      await post.populate("user", "first_name last_name cover picture username");
 
      res.json(post);
-      console.log(`createPost`);
+      // console.log(`createPost`);
   
     } catch (error) {
       return res.status(500).json({message:error.message})
@@ -53,7 +53,7 @@ exports.createPost=async (req,res)=>{
       res.json({status:"ok"})
   
     } catch (error) {
-      
+      return res.status(500).json({ message: error.message });
     }
   }
 
@@ -103,6 +103,7 @@ exports.createPost=async (req,res)=>{
             savedPosts:{
               post:postId,
               savedAt:new Date(),
+              
             }
           }
         })
