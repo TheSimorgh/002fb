@@ -179,6 +179,26 @@ export const unFollow = async (id, token) => {
 };
 
 
+export const search = async (searchTerm,token) => {  
+  try {
+
+    const { data } = await axios.post(
+      `${server_url}/search/${searchTerm}`,
+      {},
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return "ok";
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
+
+
 export const xxx = async () => {  
   try {
 

@@ -72,7 +72,7 @@ const Header = ({page,getAllPosts}) => {
       </div>
 
       {showSearchMenu ? (
-        <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} />
+        <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} token={user.token}/>
       ) : null}
 
       <div className="header_middle">
