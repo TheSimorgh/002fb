@@ -199,6 +199,25 @@ export const search = async (searchTerm,token) => {
 };
 
 
+export const addToSearchHistory = async (searchUser,token) => {  
+  try {
+
+    const { data } = await axios.put(
+      `${server_url}/addToSearchHistory`,
+      {searchUser},
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return "ok";
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
+
 export const xxx = async () => {  
   try {
 

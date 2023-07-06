@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useClickOutside from "../../helpers/clickOutside";
 import { Return,Search } from "../../svg";
-import { search } from "../../functions/user";
+import { addToSearchHistory, search } from "../../functions/user";
 
 
 const SearchMenu = ({ color,setShowSearchMenu,token }) => {
@@ -30,7 +30,10 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
       setResults(res);
     }
   }
-
+  const addToSearchHistoryHandler=async (searchUser)=>{
+     const res= await addToSearchHistory(searchUser,token)
+  }
+  
   return (
     <div className="header_left search_area scrollbar" ref={menu}>
       <div className="search_wrap">
@@ -70,6 +73,7 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
             <Link
               to={`/profile/${user.username}`}
               className="search_user_item hover1"
+              onClick={() => addToSearchHistoryHandler(user._id)}
               key={user._id}
             >
               <img src={user.picture} alt="" />
