@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useClickOutside from "../../helpers/clickOutside";
 import { Return,Search } from "../../svg";
-import { addToSearchHistory, search } from "../../functions/user";
+import { addToSearchHistory, getSearchHistory, search } from "../../functions/user";
 
 
 const SearchMenu = ({ color,setShowSearchMenu,token }) => {
@@ -14,11 +14,16 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
   useClickOutside(menu,()=>setShowSearchMenu(prev=>!prev))
   const [searchTerm,setSearchTerm]=useState("")
   const [results, setResults] = useState([]);
-
+  const [searchHistory, setSearchHistory] = useState([]);
   // const fun =(input)=>{
   //   input.current.focus()
   //   setVisibleIcon(false)
   // }
+
+  const getHistory = async () => {
+    const res = await getSearchHistory(token);
+    setSearchHistory(res);
+  };
   console.log(visibleIcon);
   useEffect(()=>{input.current.focus()},[input])
 
@@ -32,6 +37,7 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
   }
   const addToSearchHistoryHandler=async (searchUser)=>{
      const res= await addToSearchHistory(searchUser,token)
+     getHistory();
   }
   
   return (

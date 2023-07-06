@@ -217,6 +217,22 @@ export const addToSearchHistory = async (searchUser,token) => {
     return error.response.data.message;
   }
 };
+export const getSearchHistory = async (token) => {
+  try {
+    const { data } = await axios.get(
+      `${server_url}/getSearchHistory`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
 
 export const xxx = async () => {  
   try {
