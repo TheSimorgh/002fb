@@ -3,16 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useClickOutside from "../../helpers/clickOutside";
-import { Return,Search } from "../../svg";
-import { addToSearchHistory, getSearchHistory, search } from "../../functions/user";
+import { Return, Search } from "../../svg";
+import {
+  addToSearchHistory,
+  getSearchHistory,
+  removeFromSearch,
+  search,
+} from "../../functions/user";
 
-
-const SearchMenu = ({ color,setShowSearchMenu,token }) => {
-  const menu=useRef(null)
-  const input=useRef(null)
-  const [visibleIcon,setVisibleIcon]=useState(true)
-  useClickOutside(menu,()=>setShowSearchMenu(prev=>!prev))
-  const [searchTerm,setSearchTerm]=useState("")
+const SearchMenu = ({ color, setShowSearchMenu, token }) => {
+  const menu = useRef(null);
+  const input = useRef(null);
+  const [visibleIcon, setVisibleIcon] = useState(true);
+  useClickOutside(menu, () => setShowSearchMenu((prev) => !prev));
+  const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
   // const fun =(input)=>{
@@ -27,35 +31,48 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
     setSearchHistory(res);
   };
   console.log(visibleIcon);
-  useEffect(()=>{input.current.focus()},[input])
+  useEffect(() => {
+    input.current.focus();
+  }, [input]);
 
-  const searchHandler=async ()=>{
-    if(searchTerm===""){
-      setResults("")
-    }else{
-      const res=await search(searchTerm,token)
+  const searchHandler = async () => {
+    if (searchTerm === "") {
+      setResults("");
+    } else {
+      const res = await search(searchTerm, token);
       setResults(res);
     }
-  }
-  const addToSearchHistoryHandler=async (searchUser)=>{
-     const res= await addToSearchHistory(searchUser,token)
-     getHistory();
-  }
-  const   handleRemove=async (searchUser)=>{
-    
+  };
+  const addToSearchHistoryHandler = async (searchUser) => {
+    const res = await addToSearchHistory(searchUser, token);
     getHistory();
- }
+  };
+  const removeHandler = async (searchUser) => {
+    removeFromSearch(searchUser,token);
+    getHistory();
+  };
 
   return (
     <div className="header_left search_area scrollbar" ref={menu}>
       <div className="search_wrap">
         <div className="header_logo">
           <div className="circle hover1">
-           <Return />
+            <Return />
           </div>
         </div>
-        <div className="search" ref={input}   onClick={()=>{input.current.focus()}} >
-        {visibleIcon ? <div> <Search color={color} /> </div>:null}
+        <div
+          className="search"
+          ref={input}
+          onClick={() => {
+            input.current.focus();
+          }}
+        >
+          {visibleIcon ? (
+            <div>
+              {" "}
+              <Search color={color} />{" "}
+            </div>
+          ) : null}
           <input
             type="text"
             placeholder="Search Facebook"
@@ -67,7 +84,7 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
             onBlur={() => {
               setVisibleIcon(true);
             }}
-            onChange={e=>searchHandler(e.target.value)}
+            onChange={(e) => searchHandler(e.target.value)}
             value={searchTerm}
             onKeyUp={searchHandler}
           />
@@ -79,8 +96,8 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
           <a>Edit</a>
         </div>
       )}
-      <div className="search_history" >
-      {searchHistory &&
+      <div className="search_history">
+        {searchHistory &&
           results == "" &&
           searchHistory
             .sort((a, b) => {
@@ -101,15 +118,14 @@ const SearchMenu = ({ color,setShowSearchMenu,token }) => {
                 <i
                   className="exit_icon"
                   onClick={() => {
-                    handleRemove(user.user._id);
+                    removeHandler(user.user._id);
                   }}
                 ></i>
               </div>
             ))}
       </div>
-      <div className="search_results scrollbar" >
-
-      {results &&
+      <div className="search_results scrollbar">
+        {results &&
           results.map((user) => (
             <Link
               to={`/profile/${user.username}`}

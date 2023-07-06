@@ -234,6 +234,22 @@ export const getSearchHistory = async (token) => {
   }
 };
 
+export const removeFromSearch = async (searchUser,token) => {  
+  try {
+    const { data } = await axios.put(
+      `${server_url}/removeFromSearch`,
+      {searchUser},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
 export const xxx = async () => {  
   try {
 
