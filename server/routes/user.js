@@ -1,5 +1,5 @@
 const express = require("express");
-const { register,activateAccount, login,auth, sendVerification, findUser, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend, cancelRequest, follow, unFollow,   deleteRequest, unFriend, acceptRequest,search, addToSearchHistory } = require("../controllers/user");
+const { register,activateAccount, login,auth,removeFromSearch, sendVerification, findUser,getSearchHistory, sendResetPasswordCode, changePassword, getProfile,updateProfilePicture, updateCover, updateDetails, addFriend, cancelRequest, follow, unFollow,   deleteRequest, unFriend, acceptRequest,search, addToSearchHistory } = require("../controllers/user");
 const { authMidd } = require("../middlwares/authMidd");
 
 
@@ -25,6 +25,8 @@ router.put("/unfriend/:id", authMidd, unFriend);
 router.put("/deleteRequest/:id", authMidd, deleteRequest);
 router.post("/search/:searchTerm", authMidd, search);
 router.put("/addToSearchHistory", authMidd, addToSearchHistory);
+router.get("/getSearchHistory", authMidd, getSearchHistory);
+router.put("/removeFromSearch", authMidd, removeFromSearch);
 
 
 
