@@ -19,6 +19,9 @@ const DisplayAccessibility =({ setVisible }) =>{
   //   // 👇️ this is the new value of the input
   //   console.log(event.target.value);
   // };
+  console.log("darkTheme");
+
+  console.log(darkTheme);
   return (
     <div className="absolute_wrap">
       <div className="absolute_wrap_header">
@@ -106,6 +109,5 @@ const DisplayAccessibility =({ setVisible }) =>{
     </div>
   );
 }
-
 
 export default DisplayAccessibility

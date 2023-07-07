@@ -22,6 +22,9 @@ export const server_url = "http://127.0.0.1:8000";
 
 function App() {
   const { user } = useSelector((state) => state.user);
+  const { darkTheme } = useSelector((state) => (state.theme));
+
+
   const [visible, setVisible] = useState(false);
   const [{ loading, error, posts }, dispatch] = useReducer(postsReducer, {
     loading: false,
@@ -76,7 +79,9 @@ function App() {
   ];
 
   return (
-    <div className={`"container mx-auto h-screen bg-dark`}>
+    // <div className={`"container mx-auto h-screen bg-dark`}>
+    <div className={  darkTheme && "dark"}> 
+
       {visible && <CreatePostPopup user={user} setVisible={setVisible}  dispatch={dispatch} posts={posts} />}
       <Routes>
         <Route element={<LoggedInRoutes />}>
