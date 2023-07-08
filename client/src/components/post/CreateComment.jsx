@@ -89,7 +89,7 @@ const CreateComment = ({ user, postId, setComments, setCount }) => {
       }
     }
   };
-  console.log(commentImage);
+  // console.log(commentImage);
   return (
     <div className="create_comment_wrap">
       <div className="create_comment">

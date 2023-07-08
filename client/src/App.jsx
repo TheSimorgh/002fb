@@ -7,7 +7,7 @@ import "./styles/icons/icons.css";
 import "./index.css";
 import "./styles/dark.css";
 
-import { Activate, Home, Login, NotFound, Reset, Profile } from "./pages";
+import { Activate, Home, Login, NotFound, Reset, Profile, Friends } from "./pages";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
 
@@ -74,6 +74,14 @@ function App() {
           getAllPosts={getAllPosts}
         />
       ),
+    },
+    {
+      path: "/friends",
+      element: <Friends  getAllPosts={getAllPosts} posts={posts}/>,
+    },
+    {
+      path: "/friends/:type",
+      element: <Friends  getAllPosts={getAllPosts} posts={posts}/>,
     },
     { path: "/activate/:token", element: <Activate /> },
   ];

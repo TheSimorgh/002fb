@@ -19,16 +19,30 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
-  // const fun =(input)=>{
-  //   input.current.focus()
-  //   setVisibleIcon(false)
-  // }
+  const [iconVisible, setIconVisible] = useState(true);
+  console.log(searchTerm);
+  const fun =(input)=>{
+    input.current.focus()
+    setVisibleIcon(false)
+  }   
   useEffect(() => {
     getHistory();
+    console.log(searchHistory);
+    // gggg()
   }, []);
+  const gggg = async (searchTerm, token) => {
+    const res = await search(searchTerm, token);
+    setResults(res)
+
+    console.log(res);
+    console.log(searchTerm);
+    console.log(results);
+    
+  };
   const getHistory = async () => {
     const res = await getSearchHistory(token);
     setSearchHistory(res);
+    
   };
   console.log(visibleIcon);
   useEffect(() => {
@@ -36,10 +50,11 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
   }, [input]);
 
   const searchHandler = async () => {
-    if (searchTerm === "") {
+    if (searchTerm == "") {
       setResults("");
     } else {
       const res = await search(searchTerm, token);
+      console.log(res);
       setResults(res);
     }
   };
@@ -67,12 +82,11 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
             input.current.focus();
           }}
         >
-          {visibleIcon ? (
+                 {iconVisible && (
             <div>
-              {" "}
-              <Search color={color} />{" "}
+              <Search color={color} />
             </div>
-          ) : null}
+          )}
           <input
             type="text"
             placeholder="Search Facebook"
@@ -84,7 +98,7 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
             onBlur={() => {
               setVisibleIcon(true);
             }}
-            onChange={(e) => searchHandler(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
             onKeyUp={searchHandler}
           />
@@ -97,7 +111,7 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
         </div>
       )}
       <div className="search_history">
-        {searchHistory &&
+      {searchHistory &&
           results == "" &&
           searchHistory
             .sort((a, b) => {
@@ -108,29 +122,30 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
                 <Link
                   className="flex"
                   to={`/profile/${user.user.username}`}
-                  onClick={() => addToSearchHistoryHandler(user.user._id)}
+                  onClick={() => addToSearchHistoryHandler(user._id)}
                 >
-                  <img src={user.user.picture} alt="" />
+                  <img src={user.picture} alt="" />
                   <span>
-                    {user.user.first_name} {user.user.last_name}
+                    {user.first_name} {user.last_name}
                   </span>
                 </Link>
                 <i
                   className="exit_icon"
                   onClick={() => {
-                    removeHandler(user.user._id);
+                    removeHandler(user._id);
                   }}
                 ></i>
+
               </div>
             ))}
       </div>
       <div className="search_results scrollbar">
-        {results &&
+        {results && results?.length  ?
           results.map((user) => (
             <Link
               to={`/profile/${user.username}`}
               className="search_user_item hover1"
-              onClick={() => addToSearchHistoryHandler(user._id)}
+              onClick={() => addToSearchHistoryHandler(user.user._id)}
               key={user._id}
             >
               <img src={user.picture} alt="" />
@@ -138,7 +153,7 @@ const SearchMenu = ({ color, setShowSearchMenu, token }) => {
                 {user.first_name} {user.last_name}
               </span>
             </Link>
-          ))}
+          )):null}
       </div>
     </div>
   );

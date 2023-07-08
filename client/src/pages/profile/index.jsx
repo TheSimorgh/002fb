@@ -176,6 +176,7 @@ const Profile = ({ getAllPosts, posts }) => {
                       {Array.from(new Array(6), (val, i) => i + 1).map(
                         (id, i) => (
                           <Skeleton
+                            key={i}
                             circle
                             height="32px"
                             width="32px"
